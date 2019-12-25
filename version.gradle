@@ -1,0 +1,35 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.ajoberstar:grgit:2.1.0'
+    }
+}
+
+import org.ajoberstar.grgit.Grgit
+
+ext {
+    versionTag = "1.0"
+    git = Grgit.open(currentDir: projectDir)
+    gitVersionName = versionTag + "." + getNumberOfCommits(git) + getDirtyIndicator(git)
+    gitVersionCode = getNumberOfCommits(git)
+}
+
+// count the number of commits in the branch,
+// this is the same as 'git rev-list --count HEAD'
+private static def getNumberOfCommits(git) {
+    return git.log().size()
+}
+
+// return '*' if there are unchecked files
+private static def getDirtyIndicator(git) {
+    if (git.status().clean)
+        return ''
+    return '*'
+}
+
+task printVersion() {
+    println("Version Name: $gitVersionName")
+    println("Version Code: $gitVersionCode")
+}
