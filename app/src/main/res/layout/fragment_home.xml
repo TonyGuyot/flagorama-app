@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- List of world regions -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_region_list"
         android:layout_width="match_parent"

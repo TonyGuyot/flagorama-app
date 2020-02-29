@@ -32,9 +32,9 @@ class HomeAdapter : ListAdapter<Region, HomeAdapter.ViewHolder>(DiffCallback()) 
 
     private fun createOnClickListener(id: String, name: String): View.OnClickListener {
         return View.OnClickListener {
-            //val direction = HomeFragmentDirections.actionThemeFragmentToSetsFragment(id, name)
-            //it.findNavController().navigate(direction)
             Log.d("HomeAdapter", "click on item $name")
+            val direction = HomeFragmentDirections.actionHomeFragmentToRegionFragment(id, name)
+            it.findNavController().navigate(direction)
         }
     }
 

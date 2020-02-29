@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Values used for animations -->
+<resources>
+
+    <!-- Duration (in milliseconds) for all slide transition animations -->
+    <integer name="slide_duration">200</integer>
+</resources>
