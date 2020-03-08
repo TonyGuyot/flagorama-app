@@ -11,7 +11,7 @@ class HomeViewModel : ViewModel() {
     private val _list = MutableLiveData<List<Region>>().apply {
         value = listOf(
             Region("africa", "Africa"),
-            Region("america", "America"),
+            Region("americas", "Americas"),
             Region("asia", "Asia"),
             Region("europe", "Europe"),
             Region("oceania", "Oceania")
