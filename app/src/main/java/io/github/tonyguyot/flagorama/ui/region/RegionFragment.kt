@@ -6,11 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import io.github.tonyguyot.flagorama.data.api.CountriesLocalDataSource
+import io.github.tonyguyot.flagorama.data.api.CountriesRemoteDataSource
+import io.github.tonyguyot.flagorama.data.api.CountriesRepository
+import io.github.tonyguyot.flagorama.data.api.RestcountriesService
 import io.github.tonyguyot.flagorama.databinding.FragmentRegionBinding
 import io.github.tonyguyot.flagorama.utils.hide
+import io.github.tonyguyot.flagorama.utils.provideService
 import io.github.tonyguyot.flagorama.utils.setTitle
 
 /**
@@ -30,7 +35,8 @@ class RegionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // retrieve associated view model
-        viewModel = ViewModelProviders.of(this).get(RegionViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(RegionViewModel::class.java)
+        viewModel.repository = createRepository()
         viewModel.regionId = args.regionId
 
         // inflate UI
@@ -58,8 +64,16 @@ class RegionFragment : Fragment() {
     private fun subscribeToData(binding: FragmentRegionBinding, adapter: RegionAdapter) {
         viewModel.list.observe(viewLifecycleOwner, Observer { result ->
             binding.regionProgressBar.hide()
-            result?.let { adapter.submitList(it) }
+            result?.let { adapter.submitList(it.data) }
         })
+    }
+
+    // temporary
+    private fun createRepository(): CountriesRepository {
+        val local = CountriesLocalDataSource()
+        val service = provideService(RestcountriesService::class.java, RestcountriesService.ENDPOINT)
+        val remote = CountriesRemoteDataSource(service)
+        return CountriesRepository(local, remote)
     }
 }
 
