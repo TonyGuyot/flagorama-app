@@ -1,3 +1,12 @@
 package io.github.tonyguyot.flagorama.model
 
-data class Country(val id: String, val name: String, val flagUrl: String?)
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class Country(
+    @PrimaryKey val id: String,
+    @ColumnInfo(name = "region_id") val regionId: String,
+    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "flag_url") val flagUrl: String?)

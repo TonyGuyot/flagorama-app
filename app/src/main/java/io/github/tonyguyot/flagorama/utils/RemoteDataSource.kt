@@ -1,7 +1,5 @@
 package io.github.tonyguyot.flagorama.utils
 
-import io.github.tonyguyot.flagorama.utils.Resource.Success
-import io.github.tonyguyot.flagorama.utils.Resource.Error
 import retrofit2.Response
 import java.lang.Exception
 
@@ -16,12 +14,12 @@ abstract class RemoteDataSource {
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null)
-                    return Success(transform(body))
-                return Error("empty body")
+                    return Resource.success(transform(body))
+                return Resource.error(Exception("empty body"))
             }
-            return Error("HTTP error ${response.code()}")
+            return Resource.error(Exception("HTTP error ${response.code()}"))
         } catch (e: Exception) {
-            return Error(e.message ?: e.toString())
+            return Resource.error(e)
         }
     }
 }

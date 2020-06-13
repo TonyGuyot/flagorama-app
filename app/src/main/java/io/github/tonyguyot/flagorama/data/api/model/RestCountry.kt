@@ -10,5 +10,5 @@ data class RestCountry(
     @field:SerializedName("name")
     val name: String) {
 
-    fun toCountry() = Country(id, name, "https://www.countryflags.io/$id/shiny/64.png")
+    fun toCountry(region: String) = Country(id, region, name, "https://www.countryflags.io/$id/shiny/64.png")
 }

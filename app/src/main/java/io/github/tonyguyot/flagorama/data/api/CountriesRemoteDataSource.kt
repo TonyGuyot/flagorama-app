@@ -8,5 +8,5 @@ import io.github.tonyguyot.flagorama.utils.RemoteDataSource
 class CountriesRemoteDataSource(private val service: RestcountriesService): RemoteDataSource() {
 
     suspend fun fetchCountries(region: String) =
-        fetchResource({ service.getCountriesByRegion(region) }, { it.map { it.toCountry() } })
+        fetchResource({ service.getCountriesByRegion(region) }, { it.map { it.toCountry(region) } })
 }

@@ -9,10 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.room.Room
 import io.github.tonyguyot.flagorama.data.api.CountriesLocalDataSource
 import io.github.tonyguyot.flagorama.data.api.CountriesRemoteDataSource
-import io.github.tonyguyot.flagorama.data.api.CountriesRepository
+import io.github.tonyguyot.flagorama.data.CountriesRepository
 import io.github.tonyguyot.flagorama.data.api.RestcountriesService
+import io.github.tonyguyot.flagorama.data.db.AppDatabase
 import io.github.tonyguyot.flagorama.databinding.FragmentRegionBinding
 import io.github.tonyguyot.flagorama.utils.hide
 import io.github.tonyguyot.flagorama.utils.provideService
@@ -68,12 +70,19 @@ class RegionFragment : Fragment() {
         })
     }
 
-    // temporary
+    // temporary => replace by dependency injection
     private fun createRepository(): CountriesRepository {
-        val local = CountriesLocalDataSource()
+        val appContext = activity?.applicationContext
+        val db = if (appContext != null)
+                    Room.databaseBuilder(appContext, AppDatabase::class.java, "flagorama-db").build()
+                else null
+
         val service = provideService(RestcountriesService::class.java, RestcountriesService.ENDPOINT)
         val remote = CountriesRemoteDataSource(service)
-        return CountriesRepository(local, remote)
+        return CountriesRepository(
+            db?.countriesDao(),
+            remote
+        )
     }
 }
 
