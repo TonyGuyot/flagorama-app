@@ -17,6 +17,7 @@ package io.github.tonyguyot.flagorama.data
 
 import io.github.tonyguyot.flagorama.data.api.CountriesRemoteDataSource
 import io.github.tonyguyot.flagorama.data.db.CountriesDao
+import io.github.tonyguyot.flagorama.model.Country
 import io.github.tonyguyot.flagorama.utils.DatabaseFirstStrategy
 
 /**
@@ -27,10 +28,10 @@ class CountriesRepository(
     private val remoteDataSource: CountriesRemoteDataSource
 ) {
 
-    fun observeCountries(region: String) = DatabaseFirstStrategy.getResultAsLiveData(
-        databaseQuery = { dao?.getCountriesByRegion(region) },
-        shouldFetch = { it.isNullOrEmpty() },
+    fun observeCountries(region: String) = DatabaseFirstStrategy.getResultAsLiveData<List<Country>>(
+        databaseQuery = { dao?.getCountriesByRegion(region) ?: emptyList() },
+        shouldFetch = { it.isEmpty() },
         networkCall = { remoteDataSource.fetchCountries(region) },
-        saveCallResult = { if (it != null) dao?.insertAll(it) }
+        saveCallResult = { dao?.insertAll(it) }
     )
 }

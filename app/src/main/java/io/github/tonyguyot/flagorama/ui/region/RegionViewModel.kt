@@ -27,7 +27,7 @@ class RegionViewModel() : ViewModel() {
     lateinit var repository: CountriesRepository
     lateinit var regionId: String
 
-    val list: LiveData<Resource<List<Country>?>> by lazy {
+    val list: LiveData<Resource<List<Country>>> by lazy {
         repository.observeCountries(regionId)
     }
 }
