@@ -22,7 +22,7 @@ import io.github.tonyguyot.flagorama.model.Country
 import io.github.tonyguyot.flagorama.utils.Resource
 
 /** ViewModel for the [RegionFragment] */
-class RegionViewModel() : ViewModel() {
+class RegionViewModel : ViewModel() {
 
     lateinit var repository: CountriesRepository
     lateinit var regionId: String

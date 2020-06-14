@@ -15,7 +15,6 @@
  */
 package io.github.tonyguyot.flagorama.ui.region
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

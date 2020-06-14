@@ -25,7 +25,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.room.Room
-import io.github.tonyguyot.flagorama.data.api.CountriesLocalDataSource
 import io.github.tonyguyot.flagorama.data.api.CountriesRemoteDataSource
 import io.github.tonyguyot.flagorama.data.CountriesRepository
 import io.github.tonyguyot.flagorama.data.api.RestcountriesService

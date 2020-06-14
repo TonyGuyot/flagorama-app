@@ -70,7 +70,7 @@ object DatabaseFirstStrategy {
             } else {
                 // the cached data is usable, report state SUCCESS + cached data
                 Timber.d("Success: will use data from cache")
-                emit(Resource.success<T>(cachedSource))
+                emit(Resource.success(cachedSource))
             }
         }
 }
