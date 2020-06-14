@@ -15,15 +15,23 @@
  */
 package io.github.tonyguyot.flagorama.data.api
 
+import io.github.tonyguyot.flagorama.data.api.model.RestCountry
+import io.github.tonyguyot.flagorama.model.Country
 import io.github.tonyguyot.flagorama.utils.RemoteDataSource
 
 /**
  * Retrieve data about countries from the network.
  */
 class CountriesRemoteDataSource(private val service: RestcountriesService): RemoteDataSource() {
+    companion object Mapper {
+        /** map a country network object to a country logic object */
+        fun toCountry(source: RestCountry) = Country(
+            id = source.id, name = source.name, flagUrl = "https://www.countryflags.io/${source.id}/shiny/64.png"
+        )
+    }
 
     suspend fun fetchCountries(region: String) =
         fetchResource({ service.getCountriesByRegion(region) }) { restCountries ->
-            restCountries.map { it.toCountry(region) }
+            restCountries.map { toCountry(it) }
         }
 }

@@ -13,23 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.tonyguyot.flagorama.data.db
+package io.github.tonyguyot.flagorama.data.db.model
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import io.github.tonyguyot.flagorama.data.db.model.CountryEntity
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-/**
- * The Data Access Object for the Country class.
- */
-@Dao
-interface CountriesDao {
-
-    @Query("SELECT * FROM CountryEntity WHERE region_id = :regionId ORDER BY name ASC")
-    fun selectCountriesByRegion(regionId: String): List<CountryEntity>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(countries: List<CountryEntity>)
-}
+@Entity
+data class CountryEntity(
+    @PrimaryKey val id: String,
+    @ColumnInfo(name = "region_id") val regionId: String,
+    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "flag_url") val flagUrl: String?)

@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.room.Room
 import io.github.tonyguyot.flagorama.data.api.CountriesRemoteDataSource
 import io.github.tonyguyot.flagorama.data.CountriesRepository
+import io.github.tonyguyot.flagorama.data.api.CountriesLocalDataSource
 import io.github.tonyguyot.flagorama.data.api.RestcountriesService
 import io.github.tonyguyot.flagorama.data.db.AppDatabase
 import io.github.tonyguyot.flagorama.databinding.FragmentRegionBinding
@@ -87,16 +88,14 @@ class RegionFragment : Fragment() {
     // temporary => replace by dependency injection
     private fun createRepository(): CountriesRepository {
         val appContext = activity?.applicationContext
-        val db = if (appContext != null)
-                    Room.databaseBuilder(appContext, AppDatabase::class.java, "flagorama-db").build()
-                else null
+        val local = if (appContext != null) {
+            val db = Room.databaseBuilder(appContext, AppDatabase::class.java, "flagorama-db").build()
+            CountriesLocalDataSource(db.countriesDao())
+        } else null
 
         val service = provideService(RestcountriesService::class.java, RestcountriesService.ENDPOINT)
         val remote = CountriesRemoteDataSource(service)
-        return CountriesRepository(
-            db?.countriesDao(),
-            remote
-        )
+        return CountriesRepository(local, remote)
     }
 }
 
