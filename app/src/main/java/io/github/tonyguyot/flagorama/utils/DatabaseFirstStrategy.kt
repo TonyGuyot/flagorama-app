@@ -30,7 +30,7 @@ import timber.log.Timber
  */
 object DatabaseFirstStrategy {
 
-    fun <T> getResultAsLiveData(databaseQuery: () -> T,
+    fun <T> getResultAsLiveData(databaseQuery: suspend () -> T,
                                 shouldFetch: (T) -> Boolean,
                                 networkCall: suspend () -> Resource<T>,
                                 saveCallResult: suspend (T) -> Unit): LiveData<Resource<T>> =

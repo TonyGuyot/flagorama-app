@@ -13,9 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.tonyguyot.flagorama.data.api.model
+package io.github.tonyguyot.flagorama.data.remote
 
-import com.google.gson.annotations.SerializedName
+import io.github.tonyguyot.flagorama.data.remote.model.RestCountry
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Path
 
-data class RestCountry(@field:SerializedName("alpha2Code") val id: String,
-                       @field:SerializedName("name") val name: String)
+/**
+ * Restcountries API access points
+ */
+interface RestcountriesService {
+
+    companion object {
+        const val ENDPOINT = "https://restcountries.eu/rest/v2/"
+    }
+
+    @GET("region/{id}?fields=alpha2Code;name")
+    suspend fun getCountriesByRegion(@Path("id") regionId: String): Response<List<RestCountry>>
+}

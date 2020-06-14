@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.tonyguyot.flagorama.data.api
+package io.github.tonyguyot.flagorama.data.remote
 
-import io.github.tonyguyot.flagorama.data.api.model.RestCountry
+import io.github.tonyguyot.flagorama.data.remote.model.RestCountry
 import io.github.tonyguyot.flagorama.model.Country
 import io.github.tonyguyot.flagorama.utils.RemoteDataSource
 

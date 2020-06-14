@@ -15,8 +15,8 @@
  */
 package io.github.tonyguyot.flagorama.data
 
-import io.github.tonyguyot.flagorama.data.api.CountriesLocalDataSource
-import io.github.tonyguyot.flagorama.data.api.CountriesRemoteDataSource
+import io.github.tonyguyot.flagorama.data.local.CountriesLocalDataSource
+import io.github.tonyguyot.flagorama.data.remote.CountriesRemoteDataSource
 import io.github.tonyguyot.flagorama.utils.DatabaseFirstStrategy
 
 /**

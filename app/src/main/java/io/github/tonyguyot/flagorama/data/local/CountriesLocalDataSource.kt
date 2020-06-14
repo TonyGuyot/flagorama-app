@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.tonyguyot.flagorama.data.api
+package io.github.tonyguyot.flagorama.data.local
 
-import io.github.tonyguyot.flagorama.data.db.CountriesDao
-import io.github.tonyguyot.flagorama.data.db.model.CountryEntity
+import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
 import io.github.tonyguyot.flagorama.model.Country
 
 /**
@@ -37,9 +36,18 @@ class CountriesLocalDataSource(private val dao: CountriesDao) {
     }
 
     fun getCountriesByRegion(regionId: String): List<Country> =
-        dao.selectCountriesByRegion(regionId).map { toCountry(it) }
+        dao.selectCountriesByRegion(regionId).map {
+            toCountry(
+                it
+            )
+        }
 
     fun saveCountries(countries: List<Country>, regionId: String) {
-        dao.insertAll(countries.map { toCountryEntity(it, regionId) })
+        dao.insertAll(countries.map {
+            toCountryEntity(
+                it,
+                regionId
+            )
+        })
     }
 }

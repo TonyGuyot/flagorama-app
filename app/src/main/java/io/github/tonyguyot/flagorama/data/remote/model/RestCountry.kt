@@ -13,15 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.tonyguyot.flagorama.data.db.model
+package io.github.tonyguyot.flagorama.data.remote.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
-@Entity
-data class CountryEntity(
-    @PrimaryKey val id: String,
-    @ColumnInfo(name = "region_id") val regionId: String,
-    @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "flag_url") val flagUrl: String?)
+data class RestCountry(@field:SerializedName("alpha2Code") val id: String,
+                       @field:SerializedName("name") val name: String)

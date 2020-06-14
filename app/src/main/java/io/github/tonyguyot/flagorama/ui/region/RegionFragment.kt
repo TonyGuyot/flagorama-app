@@ -25,11 +25,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.room.Room
-import io.github.tonyguyot.flagorama.data.api.CountriesRemoteDataSource
+import io.github.tonyguyot.flagorama.data.remote.CountriesRemoteDataSource
 import io.github.tonyguyot.flagorama.data.CountriesRepository
-import io.github.tonyguyot.flagorama.data.api.CountriesLocalDataSource
-import io.github.tonyguyot.flagorama.data.api.RestcountriesService
-import io.github.tonyguyot.flagorama.data.db.AppDatabase
+import io.github.tonyguyot.flagorama.data.local.CountriesLocalDataSource
+import io.github.tonyguyot.flagorama.data.remote.RestcountriesService
+import io.github.tonyguyot.flagorama.data.local.AppDatabase
 import io.github.tonyguyot.flagorama.databinding.FragmentRegionBinding
 import io.github.tonyguyot.flagorama.utils.hide
 import io.github.tonyguyot.flagorama.utils.provideService
