@@ -31,6 +31,6 @@ class CountriesRepository(
         databaseQuery = { dao?.getCountriesByRegion(region) },
         shouldFetch = { it.isNullOrEmpty() },
         networkCall = { remoteDataSource.fetchCountries(region) },
-        saveCallResult = { }
+        saveCallResult = { if (it != null) dao?.insertAll(it) }
     )
 }

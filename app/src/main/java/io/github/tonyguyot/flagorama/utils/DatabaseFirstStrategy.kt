@@ -42,7 +42,7 @@ object DatabaseFirstStrategy {
                 val response = networkCall.invoke()
                 if (response.status == Resource.Status.SUCCESS) {
                     saveCallResult(response.data!!)
-                    emit(Resource.success(response.data))
+                    emit(Resource.success(databaseQuery.invoke()))
                 } else if (response.status == Resource.Status.ERROR) {
                     emit(Resource.error<T>(response.error!!, cachedSource))
                 }
