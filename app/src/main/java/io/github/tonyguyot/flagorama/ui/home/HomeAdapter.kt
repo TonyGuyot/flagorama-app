@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.github.tonyguyot.flagorama.databinding.ListItemHomeBinding
 import io.github.tonyguyot.flagorama.model.Region
+import timber.log.Timber
 
 /**
  * Adapter for the [RecyclerView] in [HomeFragment].
@@ -47,7 +48,7 @@ class HomeAdapter : ListAdapter<Region, HomeAdapter.ViewHolder>(DiffCallback()) 
 
     private fun createOnClickListener(id: String, name: String): View.OnClickListener {
         return View.OnClickListener {
-            Log.d("HomeAdapter", "click on item $name")
+            Timber.d("click on item %s", name)
             val direction = HomeFragmentDirections.actionHomeFragmentToRegionFragment(id, name)
             it.findNavController().navigate(direction)
         }

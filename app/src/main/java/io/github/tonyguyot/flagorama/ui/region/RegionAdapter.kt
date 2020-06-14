@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.github.tonyguyot.flagorama.databinding.ListItemCountryBinding
 import io.github.tonyguyot.flagorama.model.Country
+import timber.log.Timber
 
 /**
  * Adapter for the [RecyclerView] in [RegionFragment].
@@ -48,7 +49,7 @@ class RegionAdapter : ListAdapter<Country, RegionAdapter.ViewHolder>(DiffCallbac
         return View.OnClickListener {
             //val direction = HomeFragmentDirections.actionThemeFragmentToSetsFragment(id, name)
             //it.findNavController().navigate(direction)
-            Log.d("RegionAdapter", "click on item $name")
+            Timber.d("click on item %s", name)
         }
     }
 
