@@ -18,6 +18,7 @@ package io.github.tonyguyot.flagorama.ui.region
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -46,9 +47,9 @@ class RegionAdapter : ListAdapter<Country, RegionAdapter.ViewHolder>(DiffCallbac
 
     private fun createOnClickListener(id: String, name: String): View.OnClickListener {
         return View.OnClickListener {
-            //val direction = HomeFragmentDirections.actionThemeFragmentToSetsFragment(id, name)
-            //it.findNavController().navigate(direction)
             Timber.d("click on item %s", name)
+            val direction = RegionFragmentDirections.actionRegionFragmentToCountryFragment(id, name)
+            it.findNavController().navigate(direction)
         }
     }
 

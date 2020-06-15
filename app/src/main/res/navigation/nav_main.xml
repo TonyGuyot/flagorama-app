@@ -6,7 +6,7 @@
     android:id="@+id/nav_main"
     app:startDestination="@+id/nav_home">
 
-    <!-- Main screen: list of world regions -->
+    <!-- Home screen: List of world regions -->
     <fragment
         android:id="@+id/nav_home"
         android:name="io.github.tonyguyot.flagorama.ui.home.HomeFragment"
@@ -23,7 +23,7 @@
             />
     </fragment>
 
-    <!-- List of countries for a selected region -->
+    <!-- Region screen: List of countries for a selected region -->
     <fragment
         android:id="@+id/nav_region"
         android:name="io.github.tonyguyot.flagorama.ui.region.RegionFragment"
@@ -35,7 +35,6 @@
             app:argType="string"
             app:nullable="false"
             />
-
         <argument
             android:name="regionName"
             app:argType="string"
@@ -43,8 +42,37 @@
             android:defaultValue="@null"
             />
 
+        <action
+            android:id="@+id/action_region_fragment_to_country_fragment"
+            app:destination="@id/nav_country"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
     </fragment>
 
+    <!-- Country screen: Details about a selected country -->
+    <fragment
+        android:id="@+id/nav_country"
+        android:name="io.github.tonyguyot.flagorama.ui.country.CountryFragment"
+        android:label="@string/menu_country"
+        tools:layout="@layout/fragment_country">
+
+        <argument
+            android:name="countryId"
+            app:argType="string"
+            app:nullable="false"
+            />
+        <argument
+            android:name="countryName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"
+            />
+    </fragment>
+
+    <!-- For future use -->
     <fragment
         android:id="@+id/nav_gallery"
         android:name="io.github.tonyguyot.flagorama.ui.gallery.GalleryFragment"
