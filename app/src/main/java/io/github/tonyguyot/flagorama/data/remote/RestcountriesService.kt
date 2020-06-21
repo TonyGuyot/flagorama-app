@@ -16,6 +16,7 @@
 package io.github.tonyguyot.flagorama.data.remote
 
 import io.github.tonyguyot.flagorama.data.remote.model.RestCountry
+import io.github.tonyguyot.flagorama.data.remote.model.RestCountryDetails
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -31,4 +32,7 @@ interface RestcountriesService {
 
     @GET("region/{id}?fields=alpha2Code;name")
     suspend fun getCountriesByRegion(@Path("id") regionId: String): Response<List<RestCountry>>
+
+    @GET("alpha/{code}?fields=alpha2Code;name;capital;population;area")
+    suspend fun getCountryDetails(@Path("code") countryCode: String): Response<RestCountryDetails>
 }

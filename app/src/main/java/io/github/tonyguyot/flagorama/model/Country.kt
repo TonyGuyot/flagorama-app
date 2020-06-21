@@ -15,4 +15,5 @@
  */
 package io.github.tonyguyot.flagorama.model
 
+/** Basic information about a country */
 data class Country(val id: String, val name: String, val flagUrl: String?)

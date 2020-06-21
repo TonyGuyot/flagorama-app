@@ -20,6 +20,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.room.Room
@@ -29,6 +30,7 @@ import io.github.tonyguyot.flagorama.data.local.CountriesLocalDataSource
 import io.github.tonyguyot.flagorama.data.remote.RestcountriesService
 import io.github.tonyguyot.flagorama.data.local.AppDatabase
 import io.github.tonyguyot.flagorama.databinding.FragmentCountryBinding
+import io.github.tonyguyot.flagorama.utils.hide
 import io.github.tonyguyot.flagorama.utils.provideService
 import io.github.tonyguyot.flagorama.utils.setTitle
 
@@ -47,21 +49,19 @@ class CountryFragment : Fragment() {
         // retrieve associated view model
         viewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
         viewModel.repository = createRepository()
-        viewModel.countryId = args.countryId
+        viewModel.countryCode = args.countryId
 
         // inflate UI
         val binding = FragmentCountryBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         context ?: return binding.root
 
         // set the title of this fragment
         args.countryName?.let { setTitle(it) }
 
-        // setup
-        // TODO
-
         // subscribe to data changes
-        // TODO
-        //subscribeToData(binding, adapter)
+        subscribeToData(binding)
 
         // setup the menu
         setHasOptionsMenu(true)
@@ -70,14 +70,11 @@ class CountryFragment : Fragment() {
         return binding.root
     }
 
-    /*
-    private fun subscribeToData(binding: FragmentRegionBinding, adapter: RegionAdapter) {
-        viewModel.list.observe(viewLifecycleOwner, Observer { result ->
-            binding.regionProgressBar.hide()
-            result?.let { adapter.submitList(it.data) }
+    private fun subscribeToData(binding: FragmentCountryBinding) {
+        viewModel.details.observe(viewLifecycleOwner, Observer { result ->
+            binding.countryProgressBar.hide()
         })
     }
-    */
 
     // temporary => replace by dependency injection
     private fun createRepository(): CountriesRepository {

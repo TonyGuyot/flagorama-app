@@ -15,8 +15,10 @@
  */
 package io.github.tonyguyot.flagorama.data.local
 
+import io.github.tonyguyot.flagorama.data.local.model.CountryDetailsEntity
 import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
 import io.github.tonyguyot.flagorama.model.Country
+import io.github.tonyguyot.flagorama.model.CountryDetails
 
 /**
  * Provide a abstraction to the local cache.
@@ -29,17 +31,30 @@ class CountriesLocalDataSource(private val dao: CountriesDao) {
             id = source.id, name = source.name, flagUrl = source.flagUrl
         )
 
+        /** map a country details database entity to a country details logic object */
+        fun toCountryDetails(source: CountryDetailsEntity) = CountryDetails(
+            country = Country(id = source.id, name = source.name, flagUrl = source.flagUrl),
+            capital = source.capital, population = source.population, area = source.area
+        )
+
         /** map a country logic object to a country database entity */
         fun toCountryEntity(source: Country, regionId: String) = CountryEntity(
             id = source.id, regionId = regionId, name = source.name, flagUrl = source.flagUrl
         )
+
+        /** map a country details logic object to a country details database entity */
+        fun toCountryDetailsEntity(source: CountryDetails) = CountryDetailsEntity(
+            id = source.country.id, name = source.country.name, flagUrl = source.country.flagUrl,
+            capital = source.capital, population = source.population, area = source.area
+        )
     }
 
     fun getCountriesByRegion(regionId: String): List<Country> =
-        dao.selectCountriesByRegion(regionId).map {
-            toCountry(
-                it
-            )
+        dao.selectCountriesByRegion(regionId).map { toCountry(it) }
+
+    fun getCountryDetails(countryCode: String): CountryDetails? =
+        dao.selectCountryDetailsByCountryCode(countryCode).getOrNull(1)?.let {
+            toCountryDetails(it)
         }
 
     fun saveCountries(countries: List<Country>, regionId: String) {
@@ -49,5 +64,11 @@ class CountriesLocalDataSource(private val dao: CountriesDao) {
                 regionId
             )
         })
+    }
+
+    fun saveCountryDetails(countryDetails: CountryDetails?) {
+        if (countryDetails != null) {
+            dao.insertCountryDetails(toCountryDetailsEntity(countryDetails))
+        }
     }
 }

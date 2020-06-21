@@ -18,16 +18,16 @@ package io.github.tonyguyot.flagorama.ui.country
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import io.github.tonyguyot.flagorama.data.CountriesRepository
-import io.github.tonyguyot.flagorama.model.Country
+import io.github.tonyguyot.flagorama.model.CountryDetails
 import io.github.tonyguyot.flagorama.utils.Resource
 
 /** ViewModel for the [CountryFragment] */
 class CountryViewModel : ViewModel() {
 
     lateinit var repository: CountriesRepository
-    lateinit var countryId: String
+    lateinit var countryCode: String
 
-    //val list: LiveData<Resource<List<Country>>> by lazy {
-    //    repository.observeCountries(regionId)
-    //}
+    val details: LiveData<Resource<CountryDetails?>> by lazy {
+        repository.observeCountryDetails(countryCode)
+    }
 }

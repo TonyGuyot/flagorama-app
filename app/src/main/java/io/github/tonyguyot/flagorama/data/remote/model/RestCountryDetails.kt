@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.tonyguyot.flagorama.data.local
+package io.github.tonyguyot.flagorama.data.remote.model
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import io.github.tonyguyot.flagorama.data.local.model.CountryDetailsEntity
-import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
+import com.google.gson.annotations.SerializedName
 
-@Database(entities = [CountryEntity::class, CountryDetailsEntity::class], version = 1, exportSchema = false)
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun countriesDao(): CountriesDao
-}
+data class RestCountryDetails(
+    @field:SerializedName("alpha2Code") val id: String,
+    @field:SerializedName("name") val name: String,
+    @field:SerializedName("capital") val capital: String,
+    @field:SerializedName("population") val population: Long,
+    @field:SerializedName("area") val area: Double
+)

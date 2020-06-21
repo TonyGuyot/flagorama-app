@@ -33,4 +33,11 @@ class CountriesRepository(
         networkCall = { remote.fetchCountries(region) },
         saveCallResult = { local?.saveCountries(it, region) }
     )
+
+    fun observeCountryDetails(countryCode: String) = DatabaseFirstStrategy.getResultAsLiveData(
+        databaseQuery = { local?.getCountryDetails(countryCode) },
+        shouldFetch = { it == null },
+        networkCall = { remote.fetchCountryDetails(countryCode) },
+        saveCallResult = { local?.saveCountryDetails(it) }
+    )
 }

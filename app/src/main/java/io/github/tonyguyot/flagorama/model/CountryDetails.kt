@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.tonyguyot.flagorama.data.local
+package io.github.tonyguyot.flagorama.model
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import io.github.tonyguyot.flagorama.data.local.model.CountryDetailsEntity
-import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
-
-@Database(entities = [CountryEntity::class, CountryDetailsEntity::class], version = 1, exportSchema = false)
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun countriesDao(): CountriesDao
-}
+/** Detailed information about a country */
+data class CountryDetails(
+    val country: Country,
+    val capital: String,
+    val population: Long,
+    val area: Double
+)

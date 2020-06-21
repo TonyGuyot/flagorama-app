@@ -16,7 +16,9 @@
 package io.github.tonyguyot.flagorama.data.remote
 
 import io.github.tonyguyot.flagorama.data.remote.model.RestCountry
+import io.github.tonyguyot.flagorama.data.remote.model.RestCountryDetails
 import io.github.tonyguyot.flagorama.model.Country
+import io.github.tonyguyot.flagorama.model.CountryDetails
 import io.github.tonyguyot.flagorama.utils.RemoteDataSource
 
 /**
@@ -25,8 +27,19 @@ import io.github.tonyguyot.flagorama.utils.RemoteDataSource
 class CountriesRemoteDataSource(private val service: RestcountriesService): RemoteDataSource() {
     companion object Mapper {
         /** map a country network object to a country logic object */
-        fun toCountry(source: RestCountry) = Country(
-            id = source.id, name = source.name, flagUrl = "https://www.countryflags.io/${source.id}/shiny/64.png"
+        fun toCountry(source: RestCountry) = toCountry(source.id, source.name)
+
+        /** map a country network object to a country logic object */
+        fun toCountryDetails(source: RestCountryDetails) = CountryDetails(
+            country = toCountry(source.id, source.name),
+            capital = source.capital,
+            population = source.population,
+            area = source.area
+        )
+
+        /** create a country logic object from its parameters */
+        private fun toCountry(id: String, name: String) = Country(
+            id = id, name = name, flagUrl = "https://www.countryflags.io/$id/shiny/64.png"
         )
     }
 
@@ -34,4 +47,7 @@ class CountriesRemoteDataSource(private val service: RestcountriesService): Remo
         fetchResource({ service.getCountriesByRegion(region) }) { restCountries ->
             restCountries.map { toCountry(it) }
         }
+
+    suspend fun fetchCountryDetails(countryCode: String) =
+        fetchResource({ service.getCountryDetails(countryCode) }) { toCountryDetails(it) }
 }

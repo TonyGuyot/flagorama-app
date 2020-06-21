@@ -19,6 +19,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import io.github.tonyguyot.flagorama.data.local.model.CountryDetailsEntity
 import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
 
 /**
@@ -30,6 +31,12 @@ interface CountriesDao {
     @Query("SELECT * FROM CountryEntity WHERE region_id = :regionId ORDER BY name ASC")
     fun selectCountriesByRegion(regionId: String): List<CountryEntity>
 
+    @Query("SELECT * FROM CountryDetailsEntity WHERE id = :countryCode ORDER BY name ASC")
+    fun selectCountryDetailsByCountryCode(countryCode: String): List<CountryDetailsEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(countries: List<CountryEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCountryDetails(countryDetails: CountryDetailsEntity)
 }
