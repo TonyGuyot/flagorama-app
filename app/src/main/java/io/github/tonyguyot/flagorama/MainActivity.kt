@@ -56,13 +56,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBarMain.toolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // Set up the floating action button (FAB)
-        val fab: FloatingActionButton = binding.appBarMain.fab
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
-
         // Set up the navigation menu
         val navView: NavigationView = binding.navView
         navView.setupWithNavController(navController)

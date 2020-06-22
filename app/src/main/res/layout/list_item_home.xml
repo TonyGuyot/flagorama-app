@@ -17,8 +17,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_normal"
-        android:layout_marginRight="@dimen/margin_normal"
+        android:layout_margin="@dimen/margin_normal"
         android:onClick="@{clickListener}">
 
         <TextView
@@ -26,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_normal"
+            style="?android:attr/textAppearanceLarge"
             android:text="@{region.name}"
             android:gravity="center"
             tools:text="Europe"

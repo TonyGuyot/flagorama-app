@@ -29,25 +29,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintDimensionRatio="1:1"
-            android:background="@color/colorImagePlaceholder"/>
+            />
 
         <!-- Name of the country -->
         <TextView
             android:id="@+id/country_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:paddingLeft="@dimen/margin_normal"
             android:paddingRight="@dimen/margin_normal"
             android:paddingTop="@dimen/margin_small"
             android:paddingBottom="@dimen/margin_small"
             android:text="@{country.name}"
             android:textAppearance="?attr/textAppearanceListItem"
-            android:maxLines="1"
+            android:maxLines="2"
             android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/country_flag"
-            tools:text="France"/>
+            tools:text="France"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

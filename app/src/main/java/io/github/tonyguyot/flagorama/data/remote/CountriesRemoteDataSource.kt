@@ -39,7 +39,7 @@ class CountriesRemoteDataSource(private val service: RestcountriesService): Remo
 
         /** create a country logic object from its parameters */
         private fun toCountry(id: String, name: String) = Country(
-            id = id, name = name, flagUrl = "https://www.countryflags.io/$id/shiny/32.png"
+            id = id, name = name, flagUrl = "https://www.countryflags.io/$id/shiny/64.png"
         )
     }
 

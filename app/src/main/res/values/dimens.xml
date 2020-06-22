@@ -9,4 +9,6 @@
     <dimen name="margin_normal">16dp</dimen>
     <dimen name="margin_small">8dp</dimen>
 
+    <dimen name="grid_item_flag_size">64dp</dimen>
+
 </resources>

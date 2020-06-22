@@ -30,9 +30,7 @@ import io.github.tonyguyot.flagorama.data.local.CountriesLocalDataSource
 import io.github.tonyguyot.flagorama.data.remote.RestcountriesService
 import io.github.tonyguyot.flagorama.data.local.AppDatabase
 import io.github.tonyguyot.flagorama.databinding.FragmentCountryBinding
-import io.github.tonyguyot.flagorama.utils.hide
-import io.github.tonyguyot.flagorama.utils.provideService
-import io.github.tonyguyot.flagorama.utils.setTitle
+import io.github.tonyguyot.flagorama.utils.*
 
 /**
  * Country fragment: display details about a given country
@@ -72,7 +70,19 @@ class CountryFragment : Fragment() {
 
     private fun subscribeToData(binding: FragmentCountryBinding) {
         viewModel.details.observe(viewLifecycleOwner, Observer { result ->
-            binding.countryProgressBar.hide()
+            // if loading in progress, show the progress bar
+            if (result.status == Resource.Status.LOADING) {
+                binding.countryProgressBar.show()
+            } else {
+                binding.countryProgressBar.hide()
+            }
+
+            // if some data available, display it
+            if (result.data != null) {
+                binding.countryContent.show()
+            } else {
+                binding.countryContent.hide()
+            }
         })
     }
 
