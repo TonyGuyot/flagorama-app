@@ -7,6 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Menu items -->
     <string name="menu_home">Home</string>
     <string name="menu_region">Region</string>
     <string name="menu_country">Country</string>
@@ -15,6 +16,11 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+
+    <!-- Country details screen -->
+    <string name="country_capital">Capital:</string>
+    <string name="country_population">Population:</string>
+    <string name="country_area">Area (km²):</string>
 
     <!-- Accessibility strings -->
     <string name="country_flag_description">Flag</string>

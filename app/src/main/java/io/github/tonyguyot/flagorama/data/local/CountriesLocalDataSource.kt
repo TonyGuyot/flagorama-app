@@ -53,7 +53,7 @@ class CountriesLocalDataSource(private val dao: CountriesDao) {
         dao.selectCountriesByRegion(regionId).map { toCountry(it) }
 
     fun getCountryDetails(countryCode: String): CountryDetails? =
-        dao.selectCountryDetailsByCountryCode(countryCode).getOrNull(1)?.let {
+        dao.selectCountryDetailsByCountryCode(countryCode).getOrNull(0)?.let {
             toCountryDetails(it)
         }
 
