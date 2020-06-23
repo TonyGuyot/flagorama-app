@@ -15,4 +15,11 @@
  */
 package io.github.tonyguyot.flagorama.model
 
-data class Region(val id: String, val name: String)
+/**
+ * Represent a world region, i.e. a continent.
+ *
+ * @property code       unique identifier, restcountries.eu region names are used:
+ *                      Africa, Americas, Asia, Europe, Oceania
+ * @property name       non localized name
+ */
+data class Region(val code: String, val name: String)

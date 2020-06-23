@@ -27,11 +27,11 @@ import io.github.tonyguyot.flagorama.utils.RemoteDataSource
 class CountriesRemoteDataSource(private val service: RestcountriesService): RemoteDataSource() {
     companion object Mapper {
         /** map a country network object to a country logic object */
-        fun toCountry(source: RestCountry) = toCountry(source.id, source.name, source.flagUrl)
+        fun toCountry(source: RestCountry) = toCountry(source.code, source.name, source.flagUrl)
 
         /** map a country network object to a country logic object */
         fun toCountryDetails(source: RestCountryDetails) = CountryDetails(
-            country = toCountry(source.id, source.name, source.flagUrl),
+            country = toCountry(source.code, source.name, source.flagUrl),
             capital = source.capital,
             population = source.population,
             area = source.area
@@ -39,7 +39,7 @@ class CountriesRemoteDataSource(private val service: RestcountriesService): Remo
 
         /** create a country logic object from its parameters */
         private fun toCountry(id: String, name: String, flagUrl: String) = Country(
-            id = id, name = name, flagUrl = flagUrl
+            code = id, name = name, flagUrl = flagUrl
         )
     }
 

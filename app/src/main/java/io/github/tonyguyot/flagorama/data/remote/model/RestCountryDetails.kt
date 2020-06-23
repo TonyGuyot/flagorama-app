@@ -16,9 +16,10 @@
 package io.github.tonyguyot.flagorama.data.remote.model
 
 import com.google.gson.annotations.SerializedName
+import io.github.tonyguyot.flagorama.model.Alpha3Code
 
 data class RestCountryDetails(
-    @field:SerializedName("alpha2Code") val id: String,
+    @field:SerializedName("alpha3Code") val code: Alpha3Code,
     @field:SerializedName("name") val name: String,
     @field:SerializedName("flag") val flagUrl: String,
     @field:SerializedName("capital") val capital: String,

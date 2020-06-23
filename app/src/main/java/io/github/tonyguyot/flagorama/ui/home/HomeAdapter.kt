@@ -34,7 +34,7 @@ class HomeAdapter : ListAdapter<Region, HomeAdapter.ViewHolder>(DiffCallback()) 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val region = getItem(position)
         holder.apply {
-            bind(createOnClickListener(region.id, region.name), region)
+            bind(createOnClickListener(region.code, region.name), region)
             itemView.tag = region
         }
     }
@@ -69,7 +69,7 @@ class HomeAdapter : ListAdapter<Region, HomeAdapter.ViewHolder>(DiffCallback()) 
 private class DiffCallback : DiffUtil.ItemCallback<Region>() {
 
     override fun areItemsTheSame(oldItem: Region, newItem: Region): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.code == newItem.code
     }
 
     override fun areContentsTheSame(oldItem: Region, newItem: Region): Boolean {

@@ -15,7 +15,9 @@
  */
 package io.github.tonyguyot.flagorama.model
 
-/** Detailed information about a country */
+/**
+ * Detailed information about a country
+ */
 data class CountryDetails(
     val country: Country,
     val capital: String,

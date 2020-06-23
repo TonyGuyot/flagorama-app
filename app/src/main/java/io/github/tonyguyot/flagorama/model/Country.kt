@@ -15,5 +15,14 @@
  */
 package io.github.tonyguyot.flagorama.model
 
-/** Basic information about a country */
-data class Country(val id: String, val name: String, val flagUrl: String?)
+/**
+ * Basic information about a country
+ *
+ * @property code       ISO-3166 3-letter code of the country, used as a unique identifier
+ * @property name       non localized name
+ * @property flagUrl    URL of the picture representing the flag of the country
+ */
+data class Country(val code: Alpha3Code, val name: String, val flagUrl: String)
+
+/** Basic type for an alpha-3 country code, as defined by ISO-3166 */
+typealias Alpha3Code = String

@@ -18,10 +18,12 @@ package io.github.tonyguyot.flagorama.data.local.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import io.github.tonyguyot.flagorama.model.Alpha3Code
 
 @Entity
 data class CountryEntity(
-    @PrimaryKey val id: String,
-    @ColumnInfo(name = "region_id") val regionId: String,
+    @PrimaryKey val code: Alpha3Code,
+    @ColumnInfo(name = "region_code") val regionCode: String,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "flag_url") val flagUrl: String?)
+    @ColumnInfo(name = "flag_url") val flagUrl: String
+)

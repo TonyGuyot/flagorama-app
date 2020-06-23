@@ -28,23 +28,23 @@ class CountriesLocalDataSource(private val dao: CountriesDao) {
     companion object Mapper {
         /** map a country database entity to a country logic object */
         fun toCountry(source: CountryEntity) = Country(
-            id = source.id, name = source.name, flagUrl = source.flagUrl
+            code = source.code, name = source.name, flagUrl = source.flagUrl
         )
 
         /** map a country details database entity to a country details logic object */
         fun toCountryDetails(source: CountryDetailsEntity) = CountryDetails(
-            country = Country(id = source.id, name = source.name, flagUrl = source.flagUrl),
+            country = Country(code = source.code, name = source.name, flagUrl = source.flagUrl),
             capital = source.capital, population = source.population, area = source.area
         )
 
         /** map a country logic object to a country database entity */
-        fun toCountryEntity(source: Country, regionId: String) = CountryEntity(
-            id = source.id, regionId = regionId, name = source.name, flagUrl = source.flagUrl
+        fun toCountryEntity(source: Country, regionCode: String) = CountryEntity(
+            code = source.code, regionCode = regionCode, name = source.name, flagUrl = source.flagUrl
         )
 
         /** map a country details logic object to a country details database entity */
         fun toCountryDetailsEntity(source: CountryDetails) = CountryDetailsEntity(
-            id = source.country.id, name = source.country.name, flagUrl = source.country.flagUrl,
+            code = source.country.code, name = source.country.name, flagUrl = source.country.flagUrl,
             capital = source.capital, population = source.population, area = source.area
         )
     }
