@@ -16,18 +16,37 @@
 package io.github.tonyguyot.flagorama
 
 import android.app.Application
+import coil.ImageLoader
+import coil.ImageLoaderFactory
+import coil.decode.SvgDecoder
+import coil.util.CoilUtils
 import io.github.tonyguyot.flagorama.utils.ReleaseTree
+import okhttp3.OkHttpClient
 import timber.log.Timber
 
-class FlagoramaApplication : Application() {
+class FlagoramaApplication : Application(), ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
-
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {
             Timber.plant(ReleaseTree())
         }
+        Timber.i("Starting application...")
+    }
+
+    override fun newImageLoader(): ImageLoader {
+        return ImageLoader.Builder(applicationContext)
+            .crossfade(true)
+            .okHttpClient {
+                OkHttpClient.Builder()
+                    .cache(CoilUtils.createDefaultCache(applicationContext))
+                    .build()
+            }
+            .componentRegistry {
+                add(SvgDecoder(applicationContext))
+            }
+            .build()
     }
 }

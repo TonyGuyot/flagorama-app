@@ -27,19 +27,19 @@ import io.github.tonyguyot.flagorama.utils.RemoteDataSource
 class CountriesRemoteDataSource(private val service: RestcountriesService): RemoteDataSource() {
     companion object Mapper {
         /** map a country network object to a country logic object */
-        fun toCountry(source: RestCountry) = toCountry(source.id, source.name)
+        fun toCountry(source: RestCountry) = toCountry(source.id, source.name, source.flagUrl)
 
         /** map a country network object to a country logic object */
         fun toCountryDetails(source: RestCountryDetails) = CountryDetails(
-            country = toCountry(source.id, source.name),
+            country = toCountry(source.id, source.name, source.flagUrl),
             capital = source.capital,
             population = source.population,
             area = source.area
         )
 
         /** create a country logic object from its parameters */
-        private fun toCountry(id: String, name: String) = Country(
-            id = id, name = name, flagUrl = "https://www.countryflags.io/$id/shiny/64.png"
+        private fun toCountry(id: String, name: String, flagUrl: String) = Country(
+            id = id, name = name, flagUrl = flagUrl
         )
     }
 

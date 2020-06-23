@@ -20,6 +20,7 @@ import com.google.gson.annotations.SerializedName
 data class RestCountryDetails(
     @field:SerializedName("alpha2Code") val id: String,
     @field:SerializedName("name") val name: String,
+    @field:SerializedName("flag") val flagUrl: String,
     @field:SerializedName("capital") val capital: String,
     @field:SerializedName("population") val population: Long,
     @field:SerializedName("area") val area: Double

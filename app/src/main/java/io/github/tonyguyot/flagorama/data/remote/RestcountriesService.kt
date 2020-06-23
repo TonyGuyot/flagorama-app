@@ -30,7 +30,7 @@ interface RestcountriesService {
         const val ENDPOINT = "https://restcountries.eu/rest/v2/"
     }
 
-    @GET("region/{id}?fields=alpha2Code;name")
+    @GET("region/{id}?fields=alpha2Code;name;flag")
     suspend fun getCountriesByRegion(@Path("id") regionId: String): Response<List<RestCountry>>
 
     @GET("alpha/{code}?fields=alpha2Code;name;capital;population;area")

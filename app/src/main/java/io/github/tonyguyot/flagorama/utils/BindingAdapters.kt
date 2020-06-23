@@ -17,14 +17,11 @@ package io.github.tonyguyot.flagorama.utils
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import coil.api.load
 
 @BindingAdapter("imageFromUrl")
-fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
+fun bindImageFromUrl(imageView: ImageView, imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {
-        GlideApp.with(view.context)
-            .load(imageUrl)
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .into(view)
+        imageView.load(imageUrl)
     }
 }
