@@ -23,12 +23,13 @@
             android:id="@+id/country_flag"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="@dimen/margin_small"
             android:contentDescription="@string/country_flag_description"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             app:imageFromUrl="@{country.flagUrl}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintDimensionRatio="4:3"
             />
 
         <!-- Name of the country -->
@@ -43,7 +44,7 @@
             android:paddingBottom="@dimen/margin_small"
             android:text="@{country.name}"
             android:textAppearance="?attr/textAppearanceListItem"
-            android:maxLines="2"
+            android:maxLines="3"
             android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
