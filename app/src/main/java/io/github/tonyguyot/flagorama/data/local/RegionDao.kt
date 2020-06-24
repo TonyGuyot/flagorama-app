@@ -15,13 +15,21 @@
  */
 package io.github.tonyguyot.flagorama.data.local
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import io.github.tonyguyot.flagorama.data.local.model.CountryDetailsEntity
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
 
-@Database(entities = [CountryEntity::class, CountryDetailsEntity::class], version = 1, exportSchema = false)
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun regionDao(): RegionDao
-    abstract fun countryDao(): CountryDao
+/**
+ * The Data Access Object for the [CountryEntity] class.
+ */
+@Dao
+interface RegionDao {
+
+    @Query("SELECT * FROM CountryEntity WHERE region_code = :regionCode ORDER BY name ASC")
+    fun selectCountriesByRegion(regionCode: String): List<CountryEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(countries: List<CountryEntity>)
 }

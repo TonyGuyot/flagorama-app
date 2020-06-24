@@ -17,14 +17,14 @@ package io.github.tonyguyot.flagorama.ui.country
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import io.github.tonyguyot.flagorama.data.CountriesRepository
+import io.github.tonyguyot.flagorama.data.CountryRepository
 import io.github.tonyguyot.flagorama.model.CountryDetails
 import io.github.tonyguyot.flagorama.utils.Resource
 
 /** ViewModel for the [CountryFragment] */
 class CountryViewModel : ViewModel() {
 
-    lateinit var repository: CountriesRepository
+    lateinit var repository: CountryRepository
     lateinit var countryCode: String
 
     val details: LiveData<Resource<CountryDetails?>> by lazy {

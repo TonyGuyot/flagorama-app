@@ -16,7 +16,6 @@
 package io.github.tonyguyot.flagorama.data.local
 
 import io.github.tonyguyot.flagorama.data.local.model.CountryDetailsEntity
-import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
 import io.github.tonyguyot.flagorama.model.Country
 import io.github.tonyguyot.flagorama.model.CountryDetails
 
@@ -24,22 +23,12 @@ import io.github.tonyguyot.flagorama.model.CountryDetails
  * Provide a abstraction to the local cache.
  * Perform read/write operations to the local cache and conversions to business logic objects.
  */
-class CountriesLocalDataSource(private val dao: CountriesDao) {
+class CountryLocalDataSource(private val dao: CountryDao) {
     companion object Mapper {
-        /** map a country database entity to a country logic object */
-        fun toCountry(source: CountryEntity) = Country(
-            code = source.code, name = source.name, flagUrl = source.flagUrl
-        )
-
         /** map a country details database entity to a country details logic object */
         fun toCountryDetails(source: CountryDetailsEntity) = CountryDetails(
             country = Country(code = source.code, name = source.name, flagUrl = source.flagUrl),
             capital = source.capital, population = source.population, area = source.area
-        )
-
-        /** map a country logic object to a country database entity */
-        fun toCountryEntity(source: Country, regionCode: String) = CountryEntity(
-            code = source.code, regionCode = regionCode, name = source.name, flagUrl = source.flagUrl
         )
 
         /** map a country details logic object to a country details database entity */
@@ -49,22 +38,10 @@ class CountriesLocalDataSource(private val dao: CountriesDao) {
         )
     }
 
-    fun getCountriesByRegion(regionId: String): List<Country> =
-        dao.selectCountriesByRegion(regionId).map { toCountry(it) }
-
     fun getCountryDetails(countryCode: String): CountryDetails? =
         dao.selectCountryDetailsByCountryCode(countryCode).getOrNull(0)?.let {
             toCountryDetails(it)
         }
-
-    fun saveCountries(countries: List<Country>, regionId: String) {
-        dao.insertAll(countries.map {
-            toCountryEntity(
-                it,
-                regionId
-            )
-        })
-    }
 
     fun saveCountryDetails(countryDetails: CountryDetails?) {
         if (countryDetails != null) {

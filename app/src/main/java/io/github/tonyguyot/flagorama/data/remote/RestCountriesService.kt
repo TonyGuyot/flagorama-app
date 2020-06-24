@@ -25,7 +25,7 @@ import retrofit2.http.Path
 /**
  * Restcountries API access points
  */
-interface RestcountriesService {
+interface RestCountriesService {
 
     companion object {
         const val ENDPOINT = "https://restcountries.eu/rest/v2/"

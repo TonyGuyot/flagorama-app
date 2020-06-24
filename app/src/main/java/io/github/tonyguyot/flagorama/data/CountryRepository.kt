@@ -15,25 +15,17 @@
  */
 package io.github.tonyguyot.flagorama.data
 
-import io.github.tonyguyot.flagorama.data.local.CountriesLocalDataSource
-import io.github.tonyguyot.flagorama.data.remote.CountriesRemoteDataSource
+import io.github.tonyguyot.flagorama.data.local.CountryLocalDataSource
+import io.github.tonyguyot.flagorama.data.remote.CountryRemoteDataSource
 import io.github.tonyguyot.flagorama.utils.DatabaseFirstStrategy
 
 /**
  * Repository to retrieve information about countries.
  */
-class CountriesRepository(
-    private val local: CountriesLocalDataSource?,
-    private val remote: CountriesRemoteDataSource
+class CountryRepository(
+    private val local: CountryLocalDataSource?,
+    private val remote: CountryRemoteDataSource
 ) {
-
-    fun observeCountries(region: String) = DatabaseFirstStrategy.getResultAsLiveData(
-        databaseQuery = { local?.getCountriesByRegion(region) ?: emptyList() },
-        shouldFetch = { it.isEmpty() },
-        networkCall = { remote.fetchCountries(region) },
-        saveCallResult = { local?.saveCountries(it, region) }
-    )
-
     fun observeCountryDetails(countryCode: String) = DatabaseFirstStrategy.getResultAsLiveData(
         databaseQuery = { local?.getCountryDetails(countryCode) },
         shouldFetch = { it == null },

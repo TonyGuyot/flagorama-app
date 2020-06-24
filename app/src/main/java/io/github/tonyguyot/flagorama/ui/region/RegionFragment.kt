@@ -25,11 +25,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.room.Room
-import io.github.tonyguyot.flagorama.data.remote.CountriesRemoteDataSource
-import io.github.tonyguyot.flagorama.data.CountriesRepository
-import io.github.tonyguyot.flagorama.data.local.CountriesLocalDataSource
-import io.github.tonyguyot.flagorama.data.remote.RestcountriesService
+import io.github.tonyguyot.flagorama.data.RegionRepository
+import io.github.tonyguyot.flagorama.data.remote.RestCountriesService
 import io.github.tonyguyot.flagorama.data.local.AppDatabase
+import io.github.tonyguyot.flagorama.data.local.RegionLocalDataSource
+import io.github.tonyguyot.flagorama.data.remote.RegionRemoteDataSource
 import io.github.tonyguyot.flagorama.databinding.FragmentRegionBinding
 import io.github.tonyguyot.flagorama.utils.hide
 import io.github.tonyguyot.flagorama.utils.provideService
@@ -53,7 +53,7 @@ class RegionFragment : Fragment() {
     ): View? {
         // retrieve associated view model
         viewModel = ViewModelProvider(this).get(RegionViewModel::class.java)
-        viewModel.repository = createRepository()
+        viewModel.repository = createRegionRepository()
         viewModel.regionId = args.regionId
 
         // inflate UI
@@ -86,16 +86,16 @@ class RegionFragment : Fragment() {
     }
 
     // temporary => replace by dependency injection
-    private fun createRepository(): CountriesRepository {
+    private fun createRegionRepository(): RegionRepository {
         val appContext = activity?.applicationContext
         val local = if (appContext != null) {
             val db = Room.databaseBuilder(appContext, AppDatabase::class.java, "flagorama-db").build()
-            CountriesLocalDataSource(db.countriesDao())
+            RegionLocalDataSource(db.regionDao())
         } else null
 
-        val service = provideService(RestcountriesService::class.java, RestcountriesService.ENDPOINT)
-        val remote = CountriesRemoteDataSource(service)
-        return CountriesRepository(local, remote)
+        val service = provideService(RestCountriesService::class.java, RestCountriesService.ENDPOINT)
+        val remote = RegionRemoteDataSource(service)
+        return RegionRepository(local, remote)
     }
 }
 

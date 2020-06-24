@@ -21,7 +21,7 @@ import java.lang.Exception
 /**
  * Base data source class for all network access.
  */
-abstract class RemoteDataSource {
+abstract class BaseRemoteDataSource {
     protected suspend fun <T, R> fetchResource(call: suspend () -> Response<R>,
                                                transform: suspend (R) -> T): Resource<T> {
         try {

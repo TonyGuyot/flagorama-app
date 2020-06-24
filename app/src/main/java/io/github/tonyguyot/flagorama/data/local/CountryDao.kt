@@ -26,7 +26,7 @@ import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
  * The Data Access Object for the Country class.
  */
 @Dao
-interface CountriesDao {
+interface CountryDao {
 
     @Query("SELECT * FROM CountryEntity WHERE region_code = :regionCode ORDER BY name ASC")
     fun selectCountriesByRegion(regionCode: String): List<CountryEntity>
