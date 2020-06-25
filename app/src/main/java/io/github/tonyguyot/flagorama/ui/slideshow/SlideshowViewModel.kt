@@ -22,7 +22,7 @@ import androidx.lifecycle.ViewModel
 class SlideshowViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "The quizz is not yet implemented"
+        value = "The quiz is not yet implemented"
     }
     val text: LiveData<String> = _text
 }
