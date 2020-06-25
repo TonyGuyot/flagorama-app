@@ -22,7 +22,7 @@ import androidx.lifecycle.ViewModel
 class ToolsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is tools Fragment"
+        value = "The settings are not yet implemented"
     }
     val text: LiveData<String> = _text
 }
