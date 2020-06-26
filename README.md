@@ -2,11 +2,17 @@
 
 ## Description
 
-Flags of the different countries of the world.
+Display the flags of the different countries of the world. Along with some information about the
+countries.
+
+![screens](./doc/images/screens.png "Main workflow")
 
 ## Purpose
 
-This is intended as a playground to experiment with the Jetpack libraries.
+This is intended as a playground to experiment with the Jetpack libraries & other Android 
+technologies.
+
+More information in [Architecture](./doc/architecture.md)
 
 This is still a work in progress.
 
