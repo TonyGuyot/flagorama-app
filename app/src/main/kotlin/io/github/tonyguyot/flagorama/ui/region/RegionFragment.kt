@@ -31,9 +31,7 @@ import io.github.tonyguyot.flagorama.data.local.AppDatabase
 import io.github.tonyguyot.flagorama.data.local.RegionLocalDataSource
 import io.github.tonyguyot.flagorama.data.remote.RegionRemoteDataSource
 import io.github.tonyguyot.flagorama.databinding.FragmentRegionBinding
-import io.github.tonyguyot.flagorama.utils.hide
-import io.github.tonyguyot.flagorama.utils.provideService
-import io.github.tonyguyot.flagorama.utils.setTitle
+import io.github.tonyguyot.flagorama.utils.*
 
 /**
  * Region fragment: display the list of countries belonging to that region
@@ -80,7 +78,12 @@ class RegionFragment : Fragment() {
 
     private fun subscribeToData(binding: FragmentRegionBinding, adapter: RegionAdapter) {
         viewModel.list.observe(viewLifecycleOwner, Observer { result ->
-            binding.regionProgressBar.hide()
+            // if loading in progress, show the progress bar
+            if (result.status == Resource.Status.LOADING) {
+                binding.regionProgressBar.show()
+            } else {
+                binding.regionProgressBar.hide()
+            }
             result?.let { adapter.submitList(it.data) }
         })
     }
