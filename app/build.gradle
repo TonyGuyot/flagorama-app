@@ -18,6 +18,7 @@ android {
         targetSdkVersion 29
         versionCode gitVersionCode
         versionName gitVersionName
+        resValue "string", "version_name", "$gitVersionName"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

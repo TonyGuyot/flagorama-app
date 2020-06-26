@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.tonyguyot.flagorama.ui.slideshow
+package io.github.tonyguyot.flagorama.ui.quiz
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideshowViewModel : ViewModel() {
+class QuizViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "The quiz is not yet implemented"

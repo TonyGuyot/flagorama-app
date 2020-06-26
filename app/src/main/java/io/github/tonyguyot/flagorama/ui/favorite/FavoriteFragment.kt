@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.tonyguyot.flagorama.ui.share
+package io.github.tonyguyot.flagorama.ui.favorite
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,20 +25,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import io.github.tonyguyot.flagorama.R
 
-class ShareFragment : Fragment() {
+class FavoriteFragment : Fragment() {
 
-    private lateinit var shareViewModel: ShareViewModel
+    private lateinit var favoriteViewModel: FavoriteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        shareViewModel =
-                ViewModelProvider(this).get(ShareViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_share, container, false)
-        val textView: TextView = root.findViewById(R.id.text_share)
-        shareViewModel.text.observe(viewLifecycleOwner, Observer {
+        favoriteViewModel =
+                ViewModelProvider(this).get(FavoriteViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_favorite, container, false)
+        val textView: TextView = root.findViewById(R.id.text_gallery)
+        favoriteViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

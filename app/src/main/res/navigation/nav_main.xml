@@ -75,30 +75,30 @@
     <!-- For future use -->
     <fragment
         android:id="@+id/nav_favorite"
-        android:name="io.github.tonyguyot.flagorama.ui.gallery.GalleryFragment"
+        android:name="io.github.tonyguyot.flagorama.ui.favorite.FavoriteFragment"
         android:label="@string/menu_favorite"
-        tools:layout="@layout/fragment_gallery"
+        tools:layout="@layout/fragment_favorite"
         />
 
     <fragment
         android:id="@+id/nav_quiz"
-        android:name="io.github.tonyguyot.flagorama.ui.slideshow.SlideshowFragment"
+        android:name="io.github.tonyguyot.flagorama.ui.quiz.QuizFragment"
         android:label="@string/menu_quiz"
-        tools:layout="@layout/fragment_slideshow"
+        tools:layout="@layout/fragment_quiz"
         />
 
     <fragment
         android:id="@+id/nav_settings"
         android:name="io.github.tonyguyot.flagorama.ui.tools.ToolsFragment"
         android:label="@string/menu_settings"
-        tools:layout="@layout/fragment_tools"
+        tools:layout="@layout/fragment_settings"
         />
 
     <fragment
         android:id="@+id/nav_about"
-        android:name="io.github.tonyguyot.flagorama.ui.share.ShareFragment"
+        android:name="io.github.tonyguyot.flagorama.ui.about.AboutFragment"
         android:label="@string/menu_about"
-        tools:layout="@layout/fragment_share"
+        tools:layout="@layout/fragment_about"
         />
 
     <fragment
