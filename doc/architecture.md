@@ -6,7 +6,9 @@ This app uses the MVVM architecture with the repository pattern. It is an extend
 architecture described in [Guide to app architecture](https://developer.android.com/jetpack/guide).
 It uses also some ideas from [Eli-Fox, LEGO-Catalog](https://github.com/Eli-Fox/LEGO-Catalog).
 
-## About model entities
+## General overview
+
+### About model entities
 
 Usually examples of Android app architectures are mixing everything in the model entities. This is a
 bad practice: database or JSON specific annotations are then carried in the whole application.
@@ -51,60 +53,68 @@ data class CountryEntity(
 )
 ```
 
-## General overview
+### MVVM architecture
 
 ![MVVM](./images/mvvm.png "MVVM architecture")
 
-Fragment
-:  * **View** part of the MVVM architecture
-   * handle only the UI
-   * has no logic
+**Fragment**:
+    * *View* part of the MVVM architecture
+    * is an instance of `androidx.fragment.app.Fragment`
+    * handle only the UI
+    * has no logic
 
-ViewModel
-:  * **ViewModel** part of the MVVM architecture
-   * is an instance of `androidx.lifecycle.ViewModel.ViewModel`
-   * performs the binding between the UI and the source of data
-   * transforms raw data to make it suitable for display, if necessary
+**ViewModel**:
+    * *ViewModel* part of the MVVM architecture
+    * is an instance of `androidx.lifecycle.ViewModel.ViewModel`
+    * performs the binding between the UI and the source of data
+    * transforms raw data to make it suitable for display, if necessary
    
-Repository
-:  * **Model** part of the MVVM architecture
-   * is a singleton
-   * provides a unique entry point to all data access
-   * abstracts several possible sources of data
-   * defines a data workflow
+**Repository**:
+    * *Model* part of the MVVM architecture
+    * is a singleton
+    * provides a unique entry point to all data access
+    * abstracts several possible sources of data
+    * defines a data workflow
+
+### Repository pattern
 
 ![Repository](./images/repository.png "Repository pattern")
 
 Classes in blue are always specific to the application. Classes in orange are utility classes that
 are independent of the application.
 
-Repository
-:  The single entry-point to the data layer. It uses several data sources coupled to a strategy.
+**LocalDataSource**:  
+    * encapsulates the access to the database
+    * provides conversions between database entities and application data (with its `Mapper` 
+      companion object)
+    * provides error management
 
-LocalDataSource
-:  Encapsulates the access to the database. Provides conversion between database entities and
-business logic objects (with the `Mapper` inner class). Provides error management.
+**DAO** (Data Access Object):  
+    * is is an interface (Room generates automatically an implementation class)
+    * defines the queries and operations to be performed on the database
+    * returns only database entities
 
-DAO (Data Access Object)
-:  This is an interface defining the requests to be performed on the database. Manipulates only
-database entities.
+**Database**:  
+    * generates the implementation classes from the DAOs to enable access to the database
 
-Database
-:  Generates the implementation classes from the DAOs to enable access to the database.
+**RemoteDataSource**:  
+    * encapsulates the access to the network service
+    * provides conversions between communication entities and application data (with its `Mapper` 
+      companion object)
 
-RemoteDataSource
-:  Encapsulates the access to the network service. Provides conversion between communication
-entities and business logic objects (with the `Mapper` inner class).
+**BaseRemoteDataSource**:
+    * is an abstract class
+    * base class of all RemoteDataSource classes
+    * provides generic HTTP response handling
 
-BaseRemoteDataSource
-:  Abstract class. Provides generic HTTP handling.
+**Service**:
+    * is an interface (Retrofit generates automatically an implementation class)
+    * defines the requests to be performed over the network
+    * returns only network entities
 
-Service
-:  This is an interface defining the queries to be performed over the network. Manipulates only
-communication entities.
-
-Strategy
-:  Defines the type of workflow used. For example: database first strategy.
+**Strategy**:  
+    * defines the type of workflow used by the repository
+    * orchestrate the different data sources
 
 ## Implementation in Flagorama
 

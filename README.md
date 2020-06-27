@@ -12,7 +12,7 @@ countries.
 This is intended as a playground to experiment with the Jetpack libraries & other Android 
 technologies.
 
-Technology stack:
+## Technology stack:
 
 - [x] Kotlin (of course)
 - [x] Coroutines for background processing
@@ -36,8 +36,8 @@ This is still a work in progress.
 The source code is copyrighted by Tony Guyot (verdaroboto@gmail.com) and is released under the 
 Apache 2.0 license.
 
-The data for the countries and flags is provided by <<https://restcountries.eu>>. They are using the
+The data for the countries and flags is provided by <https://restcountries.eu>. They are using the
 Mozilla Public License MPL 2.0. The source code is available on GitHub: 
-<<https://github.com/apilayer/restcountries>>.
+<https://github.com/apilayer/restcountries>.
 
  
