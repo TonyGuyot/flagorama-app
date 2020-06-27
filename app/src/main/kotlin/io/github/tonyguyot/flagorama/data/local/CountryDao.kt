@@ -23,19 +23,13 @@ import io.github.tonyguyot.flagorama.data.local.model.CountryDetailsEntity
 import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
 
 /**
- * The Data Access Object for the Country class.
+ * The Data Access Object for the [CountryDetailsEntity] class.
  */
 @Dao
 interface CountryDao {
 
-    @Query("SELECT * FROM CountryEntity WHERE region_code = :regionCode ORDER BY name ASC")
-    fun selectCountriesByRegion(regionCode: String): List<CountryEntity>
-
     @Query("SELECT * FROM CountryDetailsEntity WHERE code = :countryCode ORDER BY name ASC")
     fun selectCountryDetailsByCountryCode(countryCode: String): List<CountryDetailsEntity>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(countries: List<CountryEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCountryDetails(countryDetails: CountryDetailsEntity)
