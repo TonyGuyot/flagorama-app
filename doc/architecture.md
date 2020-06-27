@@ -58,23 +58,26 @@ data class CountryEntity(
 ![MVVM](./images/mvvm.png "MVVM architecture")
 
 **Fragment**:
-    * *View* part of the MVVM architecture
-    * is an instance of `androidx.fragment.app.Fragment`
-    * handle only the UI
-    * has no logic
+
+* *View* part of the MVVM architecture
+* is an instance of `androidx.fragment.app.Fragment`
+* handle only the UI
+* has no logic
 
 **ViewModel**:
-    * *ViewModel* part of the MVVM architecture
-    * is an instance of `androidx.lifecycle.ViewModel.ViewModel`
-    * performs the binding between the UI and the source of data
-    * transforms raw data to make it suitable for display, if necessary
+
+* *ViewModel* part of the MVVM architecture
+* is an instance of `androidx.lifecycle.ViewModel.ViewModel`
+* performs the binding between the UI and the source of data
+* transforms raw data to make it suitable for display, if necessary
    
 **Repository**:
-    * *Model* part of the MVVM architecture
-    * is a singleton
-    * provides a unique entry point to all data access
-    * abstracts several possible sources of data
-    * defines a data workflow
+
+* *Model* part of the MVVM architecture
+* is a singleton
+* provides a unique entry point to all data access
+* abstracts several possible sources of data
+* defines a data workflow
 
 ### Repository pattern
 
@@ -84,37 +87,44 @@ Classes in blue are always specific to the application. Classes in orange are ut
 are independent of the application.
 
 **LocalDataSource**:  
-    * encapsulates the access to the database
-    * provides conversions between database entities and application data (with its `Mapper` 
+
+* encapsulates the access to the database
+* provides conversions between database entities and application data (with its `Mapper` 
       companion object)
-    * provides error management
+* provides error management
 
 **DAO** (Data Access Object):  
-    * is is an interface (Room generates automatically an implementation class)
-    * defines the queries and operations to be performed on the database
-    * returns only database entities
+
+* is is an interface (Room generates automatically an implementation class)
+* defines the queries and operations to be performed on the database
+* returns only database entities
 
 **Database**:  
-    * generates the implementation classes from the DAOs to enable access to the database
+
+* generates the implementation classes from the DAOs to enable access to the database
 
 **RemoteDataSource**:  
-    * encapsulates the access to the network service
-    * provides conversions between communication entities and application data (with its `Mapper` 
+    
+* encapsulates the access to the network service
+* provides conversions between communication entities and application data (with its `Mapper` 
       companion object)
 
 **BaseRemoteDataSource**:
-    * is an abstract class
-    * base class of all RemoteDataSource classes
-    * provides generic HTTP response handling
+
+* is an abstract class
+* base class of all RemoteDataSource classes
+* provides generic HTTP response handling
 
 **Service**:
-    * is an interface (Retrofit generates automatically an implementation class)
-    * defines the requests to be performed over the network
-    * returns only network entities
+
+* is an interface (Retrofit generates automatically an implementation class)
+* defines the requests to be performed over the network
+* returns only network entities
 
 **Strategy**:  
-    * defines the type of workflow used by the repository
-    * orchestrate the different data sources
+
+* defines the type of workflow used by the repository
+* orchestrate the different data sources
 
 ## Implementation in Flagorama
 
