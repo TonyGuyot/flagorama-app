@@ -1,10 +1,11 @@
 <resources>
+    <!-- Application information -->
     <string name="app_name">Flagorama</string>
     <string name="app_copyright">© 2020, Tony Guyot</string>
 
     <!-- Navigation drawer -->
     <string name="nav_header_title">Flagorama</string>
-    <string name="nav_header_subtitle">tonyguyot.github.io</string>
+    <string name="nav_header_subtitle">Flags of the world</string>
     <string name="menu_title_information">Information</string>
     <string name="nav_header_desc">Navigation header</string>
 
@@ -20,6 +21,9 @@
 
     <!-- Overflow menu items -->
     <string name="action_settings">Settings</string>
+
+    <!-- About screen -->
+    <string name="about_website">tonyguyot.github.io</string>
 
     <!-- Country details screen -->
     <string name="country_capital">Capital:</string>

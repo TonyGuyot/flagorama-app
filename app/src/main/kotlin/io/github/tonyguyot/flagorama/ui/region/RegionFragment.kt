@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.room.Room
+import io.github.tonyguyot.flagorama.R
 import io.github.tonyguyot.flagorama.data.RegionRepository
 import io.github.tonyguyot.flagorama.data.remote.RestCountriesService
 import io.github.tonyguyot.flagorama.data.local.AppDatabase
@@ -37,10 +38,6 @@ import io.github.tonyguyot.flagorama.utils.*
  * Region fragment: display the list of countries belonging to that region
  */
 class RegionFragment : Fragment() {
-    companion object {
-        const val SPAN_COUNT = 3
-    }
-
     private lateinit var viewModel: RegionViewModel
     private val args: RegionFragmentArgs by navArgs()
 
@@ -62,7 +59,8 @@ class RegionFragment : Fragment() {
         args.regionName?.let { setTitle(it) }
 
         // setup the list of countries
-        binding.regionCountryList.layoutManager = GridLayoutManager(activity, SPAN_COUNT)
+        val spanCount = resources.getInteger(R.integer.max_countries_per_row)
+        binding.regionCountryList.layoutManager = GridLayoutManager(activity, spanCount)
         val adapter = RegionAdapter()
         binding.regionCountryList.adapter = adapter
 

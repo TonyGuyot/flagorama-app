@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
         binding.homeRegionList.adapter = adapter
 
         // subscribe to data changes
-        subscribeToData(binding, adapter)
+        subscribeToData(adapter)
 
         // setup the menu
         setHasOptionsMenu(true)
@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    private fun subscribeToData(binding: FragmentHomeBinding, adapter: HomeAdapter) {
+    private fun subscribeToData(adapter: HomeAdapter) {
         homeViewModel.list.observe(viewLifecycleOwner, Observer { result ->
             result?.let { adapter.submitList(it) }
         })

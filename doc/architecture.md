@@ -1,14 +1,14 @@
 # Architecture
 
-## References
+## 1. References
 
 This app uses the MVVM architecture with the repository pattern. It is an extended work from the
 architecture described in [Guide to app architecture](https://developer.android.com/jetpack/guide).
 It uses also some ideas from [Eli-Fox, LEGO-Catalog](https://github.com/Eli-Fox/LEGO-Catalog).
 
-## General overview
+## 2. General overview
 
-### About model entities
+### 2.1 About model entities
 
 Usually examples of Android app architectures are mixing everything in the model entities. This is a
 bad practice: database or JSON specific annotations are then carried in the whole application.
@@ -53,7 +53,7 @@ data class CountryEntity(
 )
 ```
 
-### MVVM architecture
+### 2.2 MVVM architecture
 
 ![MVVM](./images/mvvm.png "MVVM architecture")
 
@@ -61,7 +61,7 @@ data class CountryEntity(
 
 * *View* part of the MVVM architecture
 * is an instance of `androidx.fragment.app.Fragment`
-* handle only the UI
+* handles only the UI
 * has no logic
 
 **ViewModel**:
@@ -79,7 +79,7 @@ data class CountryEntity(
 * abstracts several possible sources of data
 * defines a data workflow
 
-### Repository pattern
+### 2.3 Repository pattern
 
 ![Repository](./images/repository.png "Repository pattern")
 
@@ -125,14 +125,54 @@ are independent of the application.
 
 * defines the type of workflow used by the repository
 * orchestrate the different data sources
+* handle the background processing (using coroutines)
 
-## Implementation in Flagorama
+### 2.4 Strategy
+
+The strategy (corresponding to the `NetworkBoundResource` in the official Android developer
+documentation) is very important since it enables to define a given strategy (for example: database
+first) and then all repositories need only to pass the appropriate lambdas to the selected
+strategy.
+
+Here is the example of a Repository in Flagorama:
+
+```kotlin
+class RegionRepository(
+    private val local: RegionLocalDataSource?,
+    private val remote: RegionRemoteDataSource
+) {
+    fun observeCountries(region: String) = DatabaseFirstStrategy.getResultAsLiveData(
+        databaseQuery = { local?.getCountriesByRegion(region) ?: emptyList() },
+        shouldFetch = { it.isEmpty() },
+        networkCall = { remote.fetchCountries(region) },
+        saveCallResult = { local?.saveCountries(it, region) }
+    )
+}
+```
+
+The algorithm for the database strategy is the following:
+
+    emit LOADING + no data
+    retrieve data from database
+    check if data is up-to-date
+    if data is up-to-date:
+        emit SUCCESS + data
+    otherwise:
+        emit LOADING + data from database (if any)
+        fetch data from network
+        if network call is successful:
+            save data to database
+            emit SUCCESS + data
+        otherwise:
+            emit ERROR + error code
+
+## 3. Implementation in Flagorama
 
 Flagorama has three screens using this architecture:
 
 ![Screens](./images/screens.png "Screen workflow")
 
-### Home screen
+### 3.1 Home screen
 
 The home screen provides a list of world regions (continents) to select from. This is the simplest 
 screen: since the list is fixed, there is no data retrieval here and therefore no repository. A view
@@ -143,7 +183,7 @@ model is used nonetheless as it provides a simple example.
 * The view model (HomeViewModel) exports the data (the list of regions) using **LiveData**.
 * The UI (HomeFragment) observes this data and uses it to populate a list.
 
-### Region screen
+### 3.2 Region screen
 
 The region screen displays the list of countries and their flags corresponding to the region
 selected in the previous screen.
@@ -152,7 +192,7 @@ selected in the previous screen.
 
 ![Region repository](./images/repository-region.png "Repository for Region screen")
 
-### Country screen
+### 3.3 Country screen
 
 The country screen displays details about the country selected in the previous screen.
 
