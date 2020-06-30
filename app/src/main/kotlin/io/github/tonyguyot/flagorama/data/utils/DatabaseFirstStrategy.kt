@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.tonyguyot.flagorama.utils
+package io.github.tonyguyot.flagorama.data.utils
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
@@ -47,7 +47,11 @@ object DatabaseFirstStrategy {
                 // the cached data is not usable, report still LOADING + cached data
                 // the UI may decide to use the temporary data or not
                 Timber.d("Need fetch from network...")
-                emit(Resource.loading<T>(cachedSource))
+                emit(
+                    Resource.loading<T>(
+                        cachedSource
+                    )
+                )
 
                 // connect to the server to retrieve data
                 val response = networkCall.invoke()
@@ -61,16 +65,30 @@ object DatabaseFirstStrategy {
                     // in every other situation, report ERROR
                     if (response.status == Resource.Status.ERROR && response.error != null) {
                         Timber.d("Error from network")
-                        emit(Resource.error<T>(response.error, cachedSource))
+                        emit(
+                            Resource.error<T>(
+                                response.error,
+                                cachedSource
+                            )
+                        )
                     } else {
                         Timber.d("Unexpected status from network or empty data")
-                        emit(Resource.error(Exception("Unexpected error"), cachedSource))
+                        emit(
+                            Resource.error(
+                                Exception("Unexpected error"),
+                                cachedSource
+                            )
+                        )
                     }
                }
             } else {
                 // the cached data is usable, report state SUCCESS + cached data
                 Timber.d("Success: will use data from cache")
-                emit(Resource.success(cachedSource))
+                emit(
+                    Resource.success(
+                        cachedSource
+                    )
+                )
             }
         }
 }

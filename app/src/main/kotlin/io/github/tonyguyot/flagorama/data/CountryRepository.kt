@@ -17,7 +17,7 @@ package io.github.tonyguyot.flagorama.data
 
 import io.github.tonyguyot.flagorama.data.local.CountryLocalDataSource
 import io.github.tonyguyot.flagorama.data.remote.CountryRemoteDataSource
-import io.github.tonyguyot.flagorama.utils.DatabaseFirstStrategy
+import io.github.tonyguyot.flagorama.data.utils.DatabaseFirstStrategy
 
 /**
  * Repository to retrieve information about countries.

@@ -18,7 +18,7 @@ package io.github.tonyguyot.flagorama.data.remote
 import io.github.tonyguyot.flagorama.data.remote.model.RestCountryDetails
 import io.github.tonyguyot.flagorama.model.Country
 import io.github.tonyguyot.flagorama.model.CountryDetails
-import io.github.tonyguyot.flagorama.utils.BaseRemoteDataSource
+import io.github.tonyguyot.flagorama.data.utils.BaseRemoteDataSource
 
 /**
  * Retrieve data about countries from the network.

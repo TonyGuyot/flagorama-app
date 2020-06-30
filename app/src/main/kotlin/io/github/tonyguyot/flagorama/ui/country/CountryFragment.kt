@@ -29,6 +29,8 @@ import io.github.tonyguyot.flagorama.data.CountryRepository
 import io.github.tonyguyot.flagorama.data.local.CountryLocalDataSource
 import io.github.tonyguyot.flagorama.data.remote.RestCountriesService
 import io.github.tonyguyot.flagorama.data.local.AppDatabase
+import io.github.tonyguyot.flagorama.data.utils.Resource
+import io.github.tonyguyot.flagorama.data.utils.provideService
 import io.github.tonyguyot.flagorama.databinding.FragmentCountryBinding
 import io.github.tonyguyot.flagorama.utils.*
 
@@ -94,7 +96,10 @@ class CountryFragment : Fragment() {
             CountryLocalDataSource(db.countryDao())
         } else null
 
-        val service = provideService(RestCountriesService::class.java, RestCountriesService.ENDPOINT)
+        val service = provideService(
+            RestCountriesService::class.java,
+            RestCountriesService.ENDPOINT
+        )
         val remote = CountryRemoteDataSource(service)
         return CountryRepository(local, remote)
     }

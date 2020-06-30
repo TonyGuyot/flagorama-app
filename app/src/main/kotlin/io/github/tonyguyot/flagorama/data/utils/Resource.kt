@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.tonyguyot.flagorama.utils
+package io.github.tonyguyot.flagorama.data.utils
 
 /** A generic class that contains data and status about loading this data. */
 data class Resource<out T>(
@@ -22,9 +22,22 @@ data class Resource<out T>(
     val error: Throwable? = null
 ) {
     companion object {
-        fun <T> success(data: T) = Resource<T>(Status.SUCCESS, data)
-        fun <T> loading(data: T? = null) = Resource<T>(Status.LOADING, data)
-        fun <T> error(error: Throwable, data: T? = null) = Resource<T>(Status.ERROR, data, error)
+        fun <T> success(data: T) =
+            Resource<T>(
+                Status.SUCCESS,
+                data
+            )
+        fun <T> loading(data: T? = null) =
+            Resource<T>(
+                Status.LOADING,
+                data
+            )
+        fun <T> error(error: Throwable, data: T? = null) =
+            Resource<T>(
+                Status.ERROR,
+                data,
+                error
+            )
     }
 
     enum class Status { SUCCESS, ERROR, LOADING }

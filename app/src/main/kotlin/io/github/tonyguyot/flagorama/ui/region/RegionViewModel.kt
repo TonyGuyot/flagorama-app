@@ -19,7 +19,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import io.github.tonyguyot.flagorama.data.RegionRepository
 import io.github.tonyguyot.flagorama.model.Country
-import io.github.tonyguyot.flagorama.utils.Resource
+import io.github.tonyguyot.flagorama.data.utils.Resource
 
 /** ViewModel for the [RegionFragment] */
 class RegionViewModel : ViewModel() {
