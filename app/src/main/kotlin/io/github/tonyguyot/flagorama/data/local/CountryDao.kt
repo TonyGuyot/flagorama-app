@@ -20,7 +20,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.github.tonyguyot.flagorama.data.local.model.CountryDetailsEntity
-import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
 
 /**
  * The Data Access Object for the [CountryDetailsEntity] class.

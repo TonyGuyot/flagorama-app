@@ -27,5 +27,6 @@ data class CountryDetailsEntity(
     @ColumnInfo(name = "flag_url") val flagUrl: String,
     @ColumnInfo(name = "capital") val capital: String,
     @ColumnInfo(name = "population") val population: Long,
-    @ColumnInfo(name = "area") val area: Double
+    @ColumnInfo(name = "area") val area: Double,
+    @ColumnInfo(name = "native_name") val nativeName: String
 )

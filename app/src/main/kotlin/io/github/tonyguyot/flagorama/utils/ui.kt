@@ -34,3 +34,7 @@ fun View.hide() {
 fun View.show() {
     visibility = View.VISIBLE
 }
+
+fun View.showIf(predicate: () -> Boolean) {
+    if (predicate()) show() else hide()
+}

@@ -73,17 +73,16 @@ class CountryFragment : Fragment() {
     private fun subscribeToData(binding: FragmentCountryBinding) {
         viewModel.details.observe(viewLifecycleOwner, Observer { result ->
             // if loading in progress, show the progress bar
-            if (result.status == Resource.Status.LOADING) {
-                binding.countryProgressBar.show()
-            } else {
-                binding.countryProgressBar.hide()
-            }
+            binding.countryProgressBar.showIf { result.status == Resource.Status.LOADING }
 
             // if some data available, display it
+            binding.countryContent.showIf { result.data != null }
+
+            // if translated and native names are the same, display only one
             if (result.data != null) {
-                binding.countryContent.show()
-            } else {
-                binding.countryContent.hide()
+                binding.countryNativeName.showIf {
+                    !result.data.country.name.contains(result.data.nativeName, ignoreCase = true)
+                }
             }
         })
     }

@@ -34,6 +34,6 @@ interface RestCountriesService {
     @GET("region/{region}?fields=alpha3Code;name;flag")
     suspend fun getCountriesByRegion(@Path("region") regionCode: String): Response<List<RestCountry>>
 
-    @GET("alpha/{code}?fields=alpha3Code;name;flag;capital;population;area")
+    @GET("alpha/{code}?fields=alpha3Code;name;flag;capital;population;area;nativeName")
     suspend fun getCountryDetails(@Path("code") countryCode: Alpha3Code): Response<RestCountryDetails>
 }

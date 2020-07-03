@@ -28,13 +28,15 @@ class CountryLocalDataSource(private val dao: CountryDao) {
         /** map a country details database entity to a country details logic object */
         fun toCountryDetails(source: CountryDetailsEntity) = CountryDetails(
             country = Country(code = source.code, name = source.name, flagUrl = source.flagUrl),
-            capital = source.capital, population = source.population, area = source.area
+            capital = source.capital, population = source.population, area = source.area,
+            nativeName = source.nativeName
         )
 
         /** map a country details logic object to a country details database entity */
         fun toCountryDetailsEntity(source: CountryDetails) = CountryDetailsEntity(
             code = source.country.code, name = source.country.name, flagUrl = source.country.flagUrl,
-            capital = source.capital, population = source.population, area = source.area
+            capital = source.capital, population = source.population, area = source.area,
+            nativeName = source.nativeName
         )
     }
 

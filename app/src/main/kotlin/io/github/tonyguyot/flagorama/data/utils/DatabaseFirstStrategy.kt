@@ -64,7 +64,7 @@ object DatabaseFirstStrategy {
                 } else {
                     // in every other situation, report ERROR
                     if (response.status == Resource.Status.ERROR && response.error != null) {
-                        Timber.d("Error from network")
+                        Timber.d(response.error, "Error from network:")
                         emit(
                             Resource.error<T>(
                                 response.error,

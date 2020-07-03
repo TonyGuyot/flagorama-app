@@ -24,5 +24,6 @@ data class RestCountryDetails(
     @field:SerializedName("flag") val flagUrl: String,
     @field:SerializedName("capital") val capital: String,
     @field:SerializedName("population") val population: Long,
-    @field:SerializedName("area") val area: Double
+    @field:SerializedName("area") val area: Double,
+    @field:SerializedName("nativeName") val nativeName: String?
 )

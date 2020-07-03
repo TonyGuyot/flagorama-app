@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- image of the flag -->
             <ImageView
-                android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_normal"
@@ -29,6 +29,7 @@
                 app:layout_collapseMode="parallax"
                 />
 
+            <!-- translated name of the country -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,6 +41,21 @@
                 android:text="@{viewModel.details.data.country.name}"
                 />
 
+            <!-- native name of the country -->
+            <TextView
+                android:id="@+id/country_native_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                style="?android:attr/textAppearanceMedium"
+                android:textStyle="italic"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:text="@{viewModel.details.data.nativeName}"
+                />
+
+            <!-- information about the country -->
             <TableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

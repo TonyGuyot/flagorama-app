@@ -22,5 +22,6 @@ data class CountryDetails(
     val country: Country,
     val capital: String,
     val population: Long,
-    val area: Double
+    val area: Double,
+    val nativeName: String
 )

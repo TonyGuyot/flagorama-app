@@ -30,7 +30,8 @@ class CountryRemoteDataSource(private val service: RestCountriesService): BaseRe
             country = toCountry(source.code, source.name, source.flagUrl),
             capital = source.capital,
             population = source.population,
-            area = source.area
+            area = source.area,
+            nativeName = source.nativeName ?: source.name
         )
 
         /** create a country logic object from its parameters */
