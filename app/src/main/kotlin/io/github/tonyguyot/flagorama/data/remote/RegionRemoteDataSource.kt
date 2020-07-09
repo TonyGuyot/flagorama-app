@@ -23,6 +23,12 @@ import io.github.tonyguyot.flagorama.data.utils.BaseRemoteDataSource
  * Retrieve data about countries from the network.
  */
 class RegionRemoteDataSource(private val service: RestCountriesService): BaseRemoteDataSource() {
+
+    suspend fun fetchCountries(region: String) =
+        fetchResource({ service.getCountriesByRegion(region) }) { restCountries ->
+            restCountries.map { toCountry(it) }
+        }
+    
     companion object Mapper {
         /** map a country network object to a country logic object */
         fun toCountry(source: RestCountry) = toCountry(source.code, source.name, source.flagUrl)
@@ -32,9 +38,4 @@ class RegionRemoteDataSource(private val service: RestCountriesService): BaseRem
             code = id, name = name, flagUrl = flagUrl
         )
     }
-
-    suspend fun fetchCountries(region: String) =
-        fetchResource({ service.getCountriesByRegion(region) }) { restCountries ->
-            restCountries.map { toCountry(it) }
-        }
 }

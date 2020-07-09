@@ -63,6 +63,31 @@
                 android:layout_marginTop="@dimen/margin_normal"
                 android:orientation="vertical">
 
+                <!-- name of the sub-region -->
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="?android:attr/textAppearanceMedium"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:text="@string/country_sub_region"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="?android:attr/textAppearanceMedium"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:text="@{viewModel.details.data.subRegion}"
+                        />
+                </TableRow>
+
+                <!-- name of the capital -->
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -86,6 +111,7 @@
                         />
                 </TableRow>
 
+                <!-- population number -->
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -111,6 +137,7 @@
                         />
                 </TableRow>
 
+                <!-- area -->
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -144,7 +171,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            tools:visibility="visible"/>
+            tools:visibility="visible"
+            />
 
     </FrameLayout>
 

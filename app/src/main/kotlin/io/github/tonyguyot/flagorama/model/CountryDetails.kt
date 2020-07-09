@@ -20,6 +20,7 @@ package io.github.tonyguyot.flagorama.model
  */
 data class CountryDetails(
     val country: Country,
+    val subRegion: String,
     val capital: String,
     val population: Long,
     val area: Double,

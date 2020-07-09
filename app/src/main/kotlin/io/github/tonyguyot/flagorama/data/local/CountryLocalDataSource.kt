@@ -24,21 +24,6 @@ import io.github.tonyguyot.flagorama.model.CountryDetails
  * Perform read/write operations to the local cache and conversions to business logic objects.
  */
 class CountryLocalDataSource(private val dao: CountryDao) {
-    companion object Mapper {
-        /** map a country details database entity to a country details logic object */
-        fun toCountryDetails(source: CountryDetailsEntity) = CountryDetails(
-            country = Country(code = source.code, name = source.name, flagUrl = source.flagUrl),
-            capital = source.capital, population = source.population, area = source.area,
-            nativeName = source.nativeName
-        )
-
-        /** map a country details logic object to a country details database entity */
-        fun toCountryDetailsEntity(source: CountryDetails) = CountryDetailsEntity(
-            code = source.country.code, name = source.country.name, flagUrl = source.country.flagUrl,
-            capital = source.capital, population = source.population, area = source.area,
-            nativeName = source.nativeName
-        )
-    }
 
     fun getCountryDetails(countryCode: String): CountryDetails? =
         dao.selectCountryDetailsByCountryCode(countryCode).getOrNull(0)?.let {
@@ -49,5 +34,23 @@ class CountryLocalDataSource(private val dao: CountryDao) {
         if (countryDetails != null) {
             dao.insertCountryDetails(toCountryDetailsEntity(countryDetails))
         }
+    }
+
+    companion object Mapper {
+        /** map a country details database entity to a country details logic object */
+        fun toCountryDetails(source: CountryDetailsEntity) = CountryDetails(
+            country = Country(code = source.code, name = source.name, flagUrl = source.flagUrl),
+            subRegion = source.subRegion,
+            capital = source.capital, population = source.population, area = source.area,
+            nativeName = source.nativeName
+        )
+
+        /** map a country details logic object to a country details database entity */
+        fun toCountryDetailsEntity(source: CountryDetails) = CountryDetailsEntity(
+            code = source.country.code, name = source.country.name, flagUrl = source.country.flagUrl,
+            subRegion = source.subRegion,
+            capital = source.capital, population = source.population, area = source.area,
+            nativeName = source.nativeName
+        )
     }
 }

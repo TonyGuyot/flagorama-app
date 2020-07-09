@@ -25,6 +25,7 @@ data class CountryDetailsEntity(
     @PrimaryKey val code: Alpha3Code,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "flag_url") val flagUrl: String,
+    @ColumnInfo(name = "sub_region") val subRegion: String,
     @ColumnInfo(name = "capital") val capital: String,
     @ColumnInfo(name = "population") val population: Long,
     @ColumnInfo(name = "area") val area: Double,

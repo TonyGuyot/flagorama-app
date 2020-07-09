@@ -22,6 +22,7 @@ data class RestCountryDetails(
     @field:SerializedName("alpha3Code") val code: Alpha3Code,
     @field:SerializedName("name") val name: String,
     @field:SerializedName("flag") val flagUrl: String,
+    @field:SerializedName("subregion") val subRegion: String?,
     @field:SerializedName("capital") val capital: String,
     @field:SerializedName("population") val population: Long,
     @field:SerializedName("area") val area: Double,

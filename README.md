@@ -1,5 +1,7 @@
 # FLAGORAMA
 
+![Master CI](https://github.com/TonyGuyot/flagorama-app/workflows/Master%20CI/badge.svg)
+
 ## Description
 
 Display the flags of the different countries of the world. Along with some information about the
@@ -12,7 +14,7 @@ countries.
 This is intended as a playground to experiment with the Jetpack libraries & other Android 
 technologies.
 
-## Technology stack:
+## Technology stack
 
 - [x] Kotlin (of course)
 - [x] Coroutines for background processing
@@ -24,6 +26,7 @@ technologies.
 - [x] Coil for download of images
 - [x] Timber for logging
 - [ ] Hilt for dependency injection
+- [ ] Espresso for UI tests
 
 This is still a work in progress.
 
