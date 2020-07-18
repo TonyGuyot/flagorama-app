@@ -70,6 +70,35 @@
             app:nullable="true"
             android:defaultValue="@null"
             />
+
+        <action
+            android:id="@+id/action_country_fragment_to_flag_fragment"
+            app:destination="@id/nav_flag"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+    </fragment>
+
+    <!-- Flag screen: The flag is shown full screen -->
+    <fragment
+        android:id="@+id/nav_flag"
+        android:name="io.github.tonyguyot.flagorama.ui.country.FlagFragment"
+        android:label="@string/menu_flag"
+        tools:layout="@layout/fragment_flag">
+
+        <argument
+            android:name="flagUrl"
+            app:argType="string"
+            app:nullable="false"
+            />
+        <argument
+            android:name="countryName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"
+            />
     </fragment>
 
     <!-- For future use -->

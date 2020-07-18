@@ -13,6 +13,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_region">Region</string>
     <string name="menu_country">Country</string>
+    <string name="menu_flag">Flag</string>
     <string name="menu_favorite">Favorites</string>
     <string name="menu_quiz">Quiz</string>
     <string name="menu_settings">Settings</string>
@@ -30,6 +31,7 @@
     <string name="country_capital">Capital:</string>
     <string name="country_population">Population:</string>
     <string name="country_area">Area (km²):</string>
+    <string name="country_hint_display_flag">Click on the flag to display it full screen</string>
 
     <!-- Accessibility strings -->
     <string name="country_flag_description">Flag</string>

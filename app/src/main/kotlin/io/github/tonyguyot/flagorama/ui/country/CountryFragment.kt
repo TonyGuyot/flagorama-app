@@ -22,6 +22,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.room.Room
 import io.github.tonyguyot.flagorama.data.remote.CountryRemoteDataSource
@@ -32,7 +33,9 @@ import io.github.tonyguyot.flagorama.data.local.AppDatabase
 import io.github.tonyguyot.flagorama.data.utils.Resource
 import io.github.tonyguyot.flagorama.data.utils.provideService
 import io.github.tonyguyot.flagorama.databinding.FragmentCountryBinding
+import io.github.tonyguyot.flagorama.ui.region.RegionFragmentDirections
 import io.github.tonyguyot.flagorama.utils.*
+import timber.log.Timber
 
 /**
  * Country fragment: display details about a given country
@@ -54,6 +57,7 @@ class CountryFragment : Fragment() {
         // inflate UI
         val binding = FragmentCountryBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
+        binding.clickListener = createOnClickListener()
         binding.lifecycleOwner = this
         context ?: return binding.root
 
@@ -85,6 +89,19 @@ class CountryFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun createOnClickListener(): View.OnClickListener {
+        return View.OnClickListener {
+            Timber.d("click on the flag")
+            val flagUrl = viewModel.details.value?.data?.country?.flagUrl
+            if (flagUrl != null) {
+                val name = viewModel.details.value?.data?.country?.name
+                val direction =
+                    CountryFragmentDirections.actionCountryFragmentToFlagFragment(flagUrl, name)
+                it.findNavController().navigate(direction)
+            }
+        }
     }
 
     // temporary => replace by dependency injection
