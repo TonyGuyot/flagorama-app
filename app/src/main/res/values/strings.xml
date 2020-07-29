@@ -35,4 +35,7 @@
 
     <!-- Accessibility strings -->
     <string name="country_flag_description">Flag</string>
+
+    <!-- Error messages -->
+    <string name="error_no_response_from_server">No response received from server. Please retry later.</string>
 </resources>

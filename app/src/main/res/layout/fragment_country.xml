@@ -188,6 +188,20 @@
             </LinearLayout>
         </ScrollView>
 
+        <!-- error message if no data retrieved -->
+        <TextView
+            android:id="@+id/country_error_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:gravity="center"
+            style="?android:attr/textAppearanceLarge"
+            android:text="@string/error_no_response_from_server"
+            />
+
+        <!-- progress bar during loading of the data -->
         <ProgressBar
             android:id="@+id/country_progress_bar"
             android:layout_width="wrap_content"

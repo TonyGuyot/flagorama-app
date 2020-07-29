@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- list of countries with their flags -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/region_country_list"
             android:layout_width="match_parent"
@@ -14,14 +15,30 @@
             android:clipToPadding="false"
             android:scrollbars="vertical"
             tools:context="io.github.tonyguyot.flagorama.MainActivity"
-            tools:listitem="@layout/list_item_country"/>
+            tools:listitem="@layout/list_item_country"
+            />
 
+        <!-- error message if no data retrieved -->
+        <TextView
+            android:id="@+id/region_error_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:gravity="center"
+            style="?android:attr/textAppearanceLarge"
+            android:text="@string/error_no_response_from_server"
+            />
+
+        <!-- progress bar during loading of the data -->
         <ProgressBar
             android:id="@+id/region_progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            tools:visibility="visible"/>
+            tools:visibility="visible"
+            />
 
     </FrameLayout>
 

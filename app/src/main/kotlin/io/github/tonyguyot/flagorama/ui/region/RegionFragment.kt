@@ -79,11 +79,12 @@ class RegionFragment : Fragment() {
     private fun subscribeToData(binding: FragmentRegionBinding, adapter: RegionAdapter) {
         viewModel.list.observe(viewLifecycleOwner, Observer { result ->
             // if loading in progress, show the progress bar
-            if (result.status == Resource.Status.LOADING) {
-                binding.regionProgressBar.show()
-            } else {
-                binding.regionProgressBar.hide()
-            }
+            binding.regionProgressBar.showIf { result.status == Resource.Status.LOADING }
+
+            // if loading failed, show the error message
+            binding.regionErrorMessage.showIf { result.status == Resource.Status.ERROR }
+
+            // if some data available, display it
             result?.let { adapter.submitList(it.data) }
         })
     }

@@ -33,7 +33,6 @@ import io.github.tonyguyot.flagorama.data.local.AppDatabase
 import io.github.tonyguyot.flagorama.data.utils.Resource
 import io.github.tonyguyot.flagorama.data.utils.provideService
 import io.github.tonyguyot.flagorama.databinding.FragmentCountryBinding
-import io.github.tonyguyot.flagorama.ui.region.RegionFragmentDirections
 import io.github.tonyguyot.flagorama.utils.*
 import timber.log.Timber
 
@@ -78,6 +77,9 @@ class CountryFragment : Fragment() {
         viewModel.details.observe(viewLifecycleOwner, Observer { result ->
             // if loading in progress, show the progress bar
             binding.countryProgressBar.showIf { result.status == Resource.Status.LOADING }
+
+            // if loading failed, show the error message
+            binding.countryErrorMessage.showIf { result.status == Resource.Status.ERROR }
 
             // if some data available, display it
             binding.countryContent.showIf { result.data != null }
