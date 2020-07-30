@@ -22,6 +22,7 @@ import coil.api.load
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(imageView: ImageView, imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {
+        imageView.adjustViewBounds = true
         imageView.load(imageUrl)
     }
 }
