@@ -16,13 +16,16 @@
 package io.github.tonyguyot.flagorama.ui.favorite
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.github.tonyguyot.flagorama.data.FavoriteRepository
+import io.github.tonyguyot.flagorama.data.utils.Resource
+import io.github.tonyguyot.flagorama.model.Country
 
 class FavoriteViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "Favorites are not yet implemented"
+    lateinit var repository: FavoriteRepository
+
+    val list: LiveData<Resource<List<Country>>> by lazy {
+        repository.observeFavoriteCountries()
     }
-    val text: LiveData<String> = _text
 }

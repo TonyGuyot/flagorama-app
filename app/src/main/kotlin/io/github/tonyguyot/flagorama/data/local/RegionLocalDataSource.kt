@@ -19,7 +19,7 @@ import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
 import io.github.tonyguyot.flagorama.model.Country
 
 /**
- * Provide a abstraction to the local cache.
+ * Provide an abstraction to the local cache.
  * Perform read/write operations to the local cache and conversions to business logic objects.
  */
 class RegionLocalDataSource(private val dao: RegionDao) {

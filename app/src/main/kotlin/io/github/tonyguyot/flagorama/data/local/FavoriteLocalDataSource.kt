@@ -15,19 +15,21 @@
  */
 package io.github.tonyguyot.flagorama.data.local
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import io.github.tonyguyot.flagorama.data.local.model.CountryDetailsEntity
-import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
+import io.github.tonyguyot.flagorama.data.local.RegionLocalDataSource.Mapper.toCountry
 import io.github.tonyguyot.flagorama.data.local.model.FavoriteEntity
+import io.github.tonyguyot.flagorama.model.Alpha3Code
+import io.github.tonyguyot.flagorama.model.Country
 
-@Database(
-    entities = [CountryEntity::class, CountryDetailsEntity::class, FavoriteEntity::class],
-    version = 1,
-    exportSchema = false
-)
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun regionDao(): RegionDao
-    abstract fun countryDao(): CountryDao
-    abstract fun favoriteDao(): FavoriteDao
+/**
+ * Provide an abstraction to the local cache.
+ * Perform read/write operations to the local cache and conversions to business logic objects.
+ */
+class FavoriteLocalDataSource(private val dao: FavoriteDao) {
+
+    fun getFavoriteCountries(): List<Country> =
+        dao.selectAllFavorites().map { toCountry(it) }
+
+    fun saveFavorite(countryCode: Alpha3Code) {
+        dao.insert(FavoriteEntity(countryCode))
+    }
 }

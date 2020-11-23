@@ -13,32 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.tonyguyot.flagorama.utils
+package io.github.tonyguyot.flagorama.data.local.model
 
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import io.github.tonyguyot.flagorama.model.Alpha3Code
 
-fun Fragment.setTitle(titleResId: Int) {
-    setTitle(resources.getString(titleResId))
-}
-
-fun Fragment.setTitle(title: String) {
-    activity?.let {
-        if (it is AppCompatActivity) {
-            it.supportActionBar?.title = title
-        }
-    }
-}
-
-fun View.hide() {
-    visibility = View.GONE
-}
-
-fun View.show() {
-    visibility = View.VISIBLE
-}
-
-fun View.showIf(predicate: () -> Boolean) {
-    if (predicate()) show() else hide()
-}
+@Entity
+data class FavoriteEntity(
+    @PrimaryKey val code: Alpha3Code
+)

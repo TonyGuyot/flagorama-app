@@ -15,19 +15,22 @@
  */
 package io.github.tonyguyot.flagorama.data.local
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import io.github.tonyguyot.flagorama.data.local.model.CountryDetailsEntity
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
 import io.github.tonyguyot.flagorama.data.local.model.FavoriteEntity
 
-@Database(
-    entities = [CountryEntity::class, CountryDetailsEntity::class, FavoriteEntity::class],
-    version = 1,
-    exportSchema = false
-)
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun regionDao(): RegionDao
-    abstract fun countryDao(): CountryDao
-    abstract fun favoriteDao(): FavoriteDao
+/**
+ * The Data Access Object for the [FavoriteEntity] class.
+ */
+@Dao
+interface FavoriteDao {
+
+    @Query("SELECT * FROM CountryEntity WHERE code = (SELECT code FROM FavoriteEntity) ORDER BY name ASC")
+    fun selectAllFavorites(): List<CountryEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(favorite: FavoriteEntity)
 }

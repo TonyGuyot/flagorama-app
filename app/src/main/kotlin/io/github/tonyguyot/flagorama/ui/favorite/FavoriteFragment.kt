@@ -19,28 +19,78 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.room.Room
 import io.github.tonyguyot.flagorama.R
+import io.github.tonyguyot.flagorama.data.FavoriteRepository
+import io.github.tonyguyot.flagorama.data.local.AppDatabase
+import io.github.tonyguyot.flagorama.data.local.FavoriteLocalDataSource
+import io.github.tonyguyot.flagorama.data.utils.Resource
+import io.github.tonyguyot.flagorama.databinding.FragmentFavoriteBinding
+import io.github.tonyguyot.flagorama.ui.region.RegionAdapter
+import io.github.tonyguyot.flagorama.utils.setTitle
+import io.github.tonyguyot.flagorama.utils.showIf
 
 class FavoriteFragment : Fragment() {
-
-    private lateinit var favoriteViewModel: FavoriteViewModel
+    private lateinit var viewModel: FavoriteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        favoriteViewModel =
-                ViewModelProvider(this).get(FavoriteViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_favorite, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
-        favoriteViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+        // retrieve associated view model
+        viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
+        viewModel.repository = createFavoriteRepository()
+
+        // inflate UI
+        val binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        context ?: return binding.root
+
+        // set the title of this fragment
+        setTitle(R.string.fav_title)
+
+        // setup the list of countries
+        val spanCount = resources.getInteger(R.integer.max_countries_per_row)
+        binding.favCountryList.layoutManager = GridLayoutManager(activity, spanCount)
+        val adapter = RegionAdapter()
+        binding.favCountryList.adapter = adapter
+
+        // subscribe to data changes
+        subscribeToData(binding, adapter)
+
+        // setup the menu
+        setHasOptionsMenu(true)
+
+        // return the root element
+        return binding.root
+    }
+
+    private fun subscribeToData(binding: FragmentFavoriteBinding, adapter: RegionAdapter) {
+        viewModel.list.observe(viewLifecycleOwner, Observer { result ->
+            // if loading in progress, show the progress bar
+            binding.favProgressBar.showIf { result.status == Resource.Status.LOADING }
+
+            // if no data available, show an explanation message
+            binding.favEmptyMessage.showIf {
+                result.status == Resource.Status.SUCCESS && result.data.isNullOrEmpty()
+            }
+
+            // if some data available, display it
+            result.let { adapter.submitList(it.data) }
         })
-        return root
+    }
+
+    // temporary => replace by dependency injection
+    private fun createFavoriteRepository(): FavoriteRepository {
+        val appContext = activity?.applicationContext
+        val local = if (appContext != null) {
+            val db = Room.databaseBuilder(appContext, AppDatabase::class.java, "flagorama-db").build()
+            FavoriteLocalDataSource(db.favoriteDao())
+        } else null
+        return FavoriteRepository(local)
     }
 }
