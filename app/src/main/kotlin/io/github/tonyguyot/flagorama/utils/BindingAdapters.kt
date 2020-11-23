@@ -17,7 +17,7 @@ package io.github.tonyguyot.flagorama.utils
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import coil.api.load
+import coil.load
 
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(imageView: ImageView, imageUrl: String?) {
