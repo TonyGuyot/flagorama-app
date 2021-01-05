@@ -33,6 +33,10 @@
     <string name="country_area">Area (km²):</string>
     <string name="country_hint_display_flag">Click on the flag to display it full screen.</string>
 
+    <!-- Menu for country details screen -->
+    <string name="menu_add_favorite">add as favorite</string>
+    <string name="info_added_to_favorite">%s has been added to the favorites</string>
+
     <!-- Favorites screen -->
     <string name="fav_title">Favorites</string>
     <string name="fav_empty">You have not selected any country as favorite yet.</string>

@@ -17,17 +17,32 @@ package io.github.tonyguyot.flagorama.ui.country
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import io.github.tonyguyot.flagorama.data.CountryRepository
+import io.github.tonyguyot.flagorama.data.FavoriteRepository
 import io.github.tonyguyot.flagorama.model.CountryDetails
 import io.github.tonyguyot.flagorama.data.utils.Resource
+import io.github.tonyguyot.flagorama.model.Alpha3Code
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /** ViewModel for the [CountryFragment] */
 class CountryViewModel : ViewModel() {
 
-    lateinit var repository: CountryRepository
+    lateinit var detailsRepository: CountryRepository
+    lateinit var favoriteRepository: FavoriteRepository
     lateinit var countryCode: String
 
     val details: LiveData<Resource<CountryDetails?>> by lazy {
-        repository.observeCountryDetails(countryCode)
+        detailsRepository.observeCountryDetails(countryCode)
+    }
+
+    fun addToFavorite() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                favoriteRepository.addFavorite(countryCode)
+            }
+        }
     }
 }

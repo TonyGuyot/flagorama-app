@@ -20,8 +20,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.room.Room
 import io.github.tonyguyot.flagorama.R
@@ -41,7 +41,7 @@ class FavoriteFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // retrieve associated view model
         viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
         viewModel.repository = createFavoriteRepository()
@@ -56,7 +56,10 @@ class FavoriteFragment : Fragment() {
         // setup the list of countries
         val spanCount = resources.getInteger(R.integer.max_countries_per_row)
         binding.favCountryList.layoutManager = GridLayoutManager(activity, spanCount)
-        val adapter = RegionAdapter()
+        val adapter = RegionAdapter { view, id, name ->
+            val direction = FavoriteFragmentDirections.actionFavoriteFragmentToCountryFragment(id, name)
+            view.findNavController().navigate(direction)
+        }
         binding.favCountryList.adapter = adapter
 
         // subscribe to data changes
@@ -70,7 +73,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun subscribeToData(binding: FragmentFavoriteBinding, adapter: RegionAdapter) {
-        viewModel.list.observe(viewLifecycleOwner, Observer { result ->
+        viewModel.list.observe(viewLifecycleOwner, { result ->
             // if loading in progress, show the progress bar
             binding.favProgressBar.showIf { result.status == Resource.Status.LOADING }
 

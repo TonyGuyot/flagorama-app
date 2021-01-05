@@ -18,7 +18,6 @@ package io.github.tonyguyot.flagorama.ui.region
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +28,8 @@ import timber.log.Timber
 /**
  * Adapter for the [RecyclerView] in [RegionFragment].
  */
-class RegionAdapter : ListAdapter<Country, RegionAdapter.ViewHolder>(DiffCallback()) {
+class RegionAdapter(val onClickListener: (View, String, String) -> Unit)
+    : ListAdapter<Country, RegionAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val country = getItem(position)
@@ -48,8 +48,7 @@ class RegionAdapter : ListAdapter<Country, RegionAdapter.ViewHolder>(DiffCallbac
     private fun createOnClickListener(id: String, name: String): View.OnClickListener {
         return View.OnClickListener {
             Timber.d("click on item %s", name)
-            val direction = RegionFragmentDirections.actionRegionFragmentToCountryFragment(id, name)
-            it.findNavController().navigate(direction)
+            onClickListener(it, id, name)
         }
     }
 

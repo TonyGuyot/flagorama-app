@@ -101,14 +101,36 @@
             />
     </fragment>
 
-    <!-- For future use -->
+    <!-- Favorite screen: List of countries that are selected as favorites -->
     <fragment
         android:id="@+id/nav_favorite"
         android:name="io.github.tonyguyot.flagorama.ui.favorite.FavoriteFragment"
         android:label="@string/menu_favorite"
-        tools:layout="@layout/fragment_favorite"
-        />
+        tools:layout="@layout/fragment_favorite">
 
+        <argument
+            android:name="regionId"
+            app:argType="string"
+            app:nullable="false"
+            />
+        <argument
+            android:name="regionName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"
+            />
+
+        <action
+            android:id="@+id/action_favorite_fragment_to_country_fragment"
+            app:destination="@id/nav_country"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            />
+    </fragment>
+
+    <!-- For future use -->
     <fragment
         android:id="@+id/nav_quiz"
         android:name="io.github.tonyguyot.flagorama.ui.quiz.QuizFragment"

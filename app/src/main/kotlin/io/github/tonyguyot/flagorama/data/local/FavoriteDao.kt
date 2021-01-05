@@ -28,7 +28,7 @@ import io.github.tonyguyot.flagorama.data.local.model.FavoriteEntity
 @Dao
 interface FavoriteDao {
 
-    @Query("SELECT * FROM CountryEntity WHERE code = (SELECT code FROM FavoriteEntity) ORDER BY name ASC")
+    @Query("SELECT * FROM CountryEntity WHERE code IN (SELECT code FROM FavoriteEntity) ORDER BY name ASC")
     fun selectAllFavorites(): List<CountryEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Add as favorite -->
+    <item android:id="@+id/action_add_favorite"
+        android:icon="@drawable/ic_action_heart_white"
+        android:title="@string/menu_add_favorite"
+        app:showAsAction="ifRoom"
+        />
+
+    <!-- Remove from favorite -->
+    <item android:id="@+id/action_remove_favorite"
+        android:icon="@drawable/ic_action_heart_pink"
+        android:title="@string/menu_add_favorite"
+        app:showAsAction="ifRoom"
+        android:visible="false"
+        />
+</menu>

@@ -16,20 +16,22 @@
 package io.github.tonyguyot.flagorama.ui.country
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.room.Room
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
+import com.google.android.material.snackbar.Snackbar
+import io.github.tonyguyot.flagorama.R
 import io.github.tonyguyot.flagorama.data.remote.CountryRemoteDataSource
 import io.github.tonyguyot.flagorama.data.CountryRepository
+import io.github.tonyguyot.flagorama.data.FavoriteRepository
 import io.github.tonyguyot.flagorama.data.local.CountryLocalDataSource
 import io.github.tonyguyot.flagorama.data.remote.RestCountriesService
 import io.github.tonyguyot.flagorama.data.local.AppDatabase
+import io.github.tonyguyot.flagorama.data.local.FavoriteLocalDataSource
 import io.github.tonyguyot.flagorama.data.utils.Resource
 import io.github.tonyguyot.flagorama.data.utils.provideService
 import io.github.tonyguyot.flagorama.databinding.FragmentCountryBinding
@@ -41,16 +43,18 @@ import timber.log.Timber
  */
 class CountryFragment : Fragment() {
     private lateinit var viewModel: CountryViewModel
+    private lateinit var rootView: View
     private val args: CountryFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // retrieve associated view model
         viewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
-        viewModel.repository = createCountryRepository()
+        viewModel.detailsRepository = createCountryRepository()
+        viewModel.favoriteRepository = createFavoriteRepository()
         viewModel.countryCode = args.countryId
 
         // inflate UI
@@ -58,7 +62,8 @@ class CountryFragment : Fragment() {
         binding.viewModel = viewModel
         binding.clickListener = createOnClickListener()
         binding.lifecycleOwner = this
-        context ?: return binding.root
+        rootView = binding.root
+        context ?: return rootView
 
         // set the title of this fragment
         args.countryName?.let { setTitle(it) }
@@ -70,11 +75,28 @@ class CountryFragment : Fragment() {
         setHasOptionsMenu(true)
 
         // return the root element
-        return binding.root
+        return rootView
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        // Inflate the menu: this adds items to the action bar if it is present
+        inflater.inflate(R.menu.country, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_add_favorite -> {
+            Timber.d("add to favorite")
+            viewModel.addToFavorite()
+            confirmAddedToFavorites()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    /** Subscribe to all live data from view model */
     private fun subscribeToData(binding: FragmentCountryBinding) {
-        viewModel.details.observe(viewLifecycleOwner, Observer { result ->
+        viewModel.details.observe(viewLifecycleOwner, { result ->
             // if loading in progress, show the progress bar
             binding.countryProgressBar.showIf { result.status == Resource.Status.LOADING }
 
@@ -93,6 +115,7 @@ class CountryFragment : Fragment() {
         })
     }
 
+    /** Action to perform when user clicks on the flag */
     private fun createOnClickListener(): View.OnClickListener {
         return View.OnClickListener {
             Timber.d("click on the flag")
@@ -104,6 +127,12 @@ class CountryFragment : Fragment() {
                 it.findNavController().navigate(direction)
             }
         }
+    }
+
+    /** Provide feedback when country added to favorites */
+    private fun confirmAddedToFavorites() {
+        val text = resources.getString(R.string.info_added_to_favorite, args.countryName ?: "")
+        Snackbar.make(rootView, text, LENGTH_LONG).show()
     }
 
     // temporary => replace by dependency injection
@@ -121,5 +150,13 @@ class CountryFragment : Fragment() {
         val remote = CountryRemoteDataSource(service)
         return CountryRepository(local, remote)
     }
+    // temporary => replace by dependency injection
+    private fun createFavoriteRepository(): FavoriteRepository {
+        val appContext = activity?.applicationContext
+        val local = if (appContext != null) {
+            val db = Room.databaseBuilder(appContext, AppDatabase::class.java, "flagorama-db").build()
+            FavoriteLocalDataSource(db.favoriteDao())
+        } else null
+        return FavoriteRepository(local)
+    }
 }
-

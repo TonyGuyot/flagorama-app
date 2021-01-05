@@ -20,8 +20,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.room.Room
@@ -47,7 +47,7 @@ class RegionFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // retrieve associated view model
         viewModel = ViewModelProvider(this).get(RegionViewModel::class.java)
         viewModel.repository = createRegionRepository()
@@ -63,7 +63,10 @@ class RegionFragment : Fragment() {
         // setup the list of countries
         val spanCount = resources.getInteger(R.integer.max_countries_per_row)
         binding.regionCountryList.layoutManager = GridLayoutManager(activity, spanCount)
-        val adapter = RegionAdapter()
+        val adapter = RegionAdapter { view, id, name ->
+            val direction = RegionFragmentDirections.actionRegionFragmentToCountryFragment(id, name)
+            view.findNavController().navigate(direction)
+        }
         binding.regionCountryList.adapter = adapter
 
         // subscribe to data changes
@@ -77,7 +80,7 @@ class RegionFragment : Fragment() {
     }
 
     private fun subscribeToData(binding: FragmentRegionBinding, adapter: RegionAdapter) {
-        viewModel.list.observe(viewLifecycleOwner, Observer { result ->
+        viewModel.list.observe(viewLifecycleOwner, { result ->
             // if loading in progress, show the progress bar
             binding.regionProgressBar.showIf { result.status == Resource.Status.LOADING }
 
