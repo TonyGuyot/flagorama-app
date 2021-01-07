@@ -27,11 +27,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /** ViewModel for the [CountryFragment] */
-class CountryViewModel : ViewModel() {
-
-    lateinit var detailsRepository: CountryRepository
-    lateinit var favoriteRepository: FavoriteRepository
-    lateinit var countryCode: String
+class CountryViewModel(
+    private val detailsRepository: CountryRepository,
+    private val favoriteRepository: FavoriteRepository,
+    private val countryCode: String
+    ) : ViewModel() {
 
     val details: LiveData<Resource<CountryDetails?>> by lazy {
         detailsRepository.observeCountryDetails(countryCode)

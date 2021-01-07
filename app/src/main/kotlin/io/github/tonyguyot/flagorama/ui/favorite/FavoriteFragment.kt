@@ -20,6 +20,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -46,8 +47,8 @@ class FavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // retrieve associated view model
-        viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
-        viewModel.repository = createFavoriteRepository()
+        val viewModelFactory = FavoriteViewModelFactory(createFavoriteRepository())
+        viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
 
         // inflate UI
         val binding = FragmentFavoriteBinding.inflate(inflater, container, false)
@@ -76,7 +77,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun subscribeToData(binding: FragmentFavoriteBinding, adapter: RegionAdapter) {
-        viewModel.list.observe(viewLifecycleOwner, { result ->
+        viewModel.getList().observe(viewLifecycleOwner, { result ->
             // if loading in progress, show the progress bar
             binding.favProgressBar.showIf { result.status == Resource.Status.LOADING }
 
@@ -98,5 +99,13 @@ class FavoriteFragment : Fragment() {
             FavoriteLocalDataSource(db.favoriteDao())
         } else null
         return FavoriteRepository(local)
+    }
+}
+
+/** Factory for the [FavoriteViewModel] */
+class FavoriteViewModelFactory(private val repository: FavoriteRepository)
+    : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return modelClass.getConstructor(FavoriteRepository::class.java).newInstance(repository)
     }
 }

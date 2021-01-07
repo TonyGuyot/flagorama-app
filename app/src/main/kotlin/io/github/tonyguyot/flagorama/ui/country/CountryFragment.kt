@@ -18,6 +18,7 @@ package io.github.tonyguyot.flagorama.ui.country
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -52,10 +53,12 @@ class CountryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // retrieve associated view model
-        viewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
-        viewModel.detailsRepository = createCountryRepository()
-        viewModel.favoriteRepository = createFavoriteRepository()
-        viewModel.countryCode = args.countryId
+        val viewModelFactory = CountryViewModelFactory(
+            detailsRepository = createCountryRepository(),
+            favoriteRepository =  createFavoriteRepository(),
+            countryCode =  args.countryId
+        )
+        viewModel = ViewModelProvider(this, viewModelFactory).get(CountryViewModel::class.java)
 
         // inflate UI
         val binding = FragmentCountryBinding.inflate(inflater, container, false)
@@ -182,5 +185,17 @@ class CountryFragment : Fragment() {
             FavoriteLocalDataSource(db.favoriteDao())
         } else null
         return FavoriteRepository(local)
+    }
+}
+
+/** Factory for the [CountryViewModel] */
+class CountryViewModelFactory(
+    private val detailsRepository: CountryRepository,
+    private val favoriteRepository: FavoriteRepository,
+    private val countryCode: String
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return modelClass.getConstructor(CountryRepository::class.java, FavoriteRepository::class.java,
+        String::class.java).newInstance(detailsRepository, favoriteRepository, countryCode)
     }
 }

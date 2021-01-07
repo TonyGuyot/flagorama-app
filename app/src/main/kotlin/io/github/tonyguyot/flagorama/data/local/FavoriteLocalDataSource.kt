@@ -15,6 +15,8 @@
  */
 package io.github.tonyguyot.flagorama.data.local
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import io.github.tonyguyot.flagorama.data.local.RegionLocalDataSource.Mapper.toCountry
 import io.github.tonyguyot.flagorama.data.local.model.FavoriteEntity
 import io.github.tonyguyot.flagorama.model.Alpha3Code
@@ -27,12 +29,12 @@ import io.github.tonyguyot.flagorama.model.Country
 class FavoriteLocalDataSource(private val dao: FavoriteDao) {
 
     /** Retrieve all countries that are marked as favorite */
-    fun getFavoriteCountries(): List<Country> =
-        dao.selectAllFavorites().map { toCountry(it) }
+    fun getFavoriteCountries(): LiveData<List<Country>> =
+        dao.selectAllFavorites().map { favorites -> favorites.map { toCountry(it) } }
 
     /** Check if the country identified by [countryCode] is marked as favorite */
-    fun isFavorite(countryCode: Alpha3Code): Boolean =
-        dao.selectFavorite(countryCode) != null
+    fun isFavorite(countryCode: Alpha3Code): LiveData<Boolean> =
+        dao.selectFavorite(countryCode).map { it != null }
 
     /** Mark the country identified by [countryCode] as favorite */
     fun saveFavorite(countryCode: Alpha3Code) {

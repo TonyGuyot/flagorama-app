@@ -15,6 +15,7 @@
  */
 package io.github.tonyguyot.flagorama.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import io.github.tonyguyot.flagorama.data.local.model.CountryEntity
 import io.github.tonyguyot.flagorama.data.local.model.FavoriteEntity
@@ -27,10 +28,10 @@ import io.github.tonyguyot.flagorama.model.Alpha3Code
 interface FavoriteDao {
 
     @Query("SELECT * FROM CountryEntity WHERE code IN (SELECT code FROM FavoriteEntity) ORDER BY name ASC")
-    fun selectAllFavorites(): List<CountryEntity>
+    fun selectAllFavorites(): LiveData<List<CountryEntity>>
 
     @Query("SELECT * FROM FavoriteEntity WHERE code = :code")
-    fun selectFavorite(code: Alpha3Code): FavoriteEntity?
+    fun selectFavorite(code: Alpha3Code): LiveData<FavoriteEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(favorite: FavoriteEntity)

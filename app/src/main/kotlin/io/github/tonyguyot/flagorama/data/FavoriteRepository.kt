@@ -15,6 +15,7 @@
  */
 package io.github.tonyguyot.flagorama.data
 
+import androidx.lifecycle.MutableLiveData
 import io.github.tonyguyot.flagorama.data.local.FavoriteLocalDataSource
 import io.github.tonyguyot.flagorama.data.utils.DatabaseOnlyStrategy
 import io.github.tonyguyot.flagorama.model.Alpha3Code
@@ -24,11 +25,11 @@ import io.github.tonyguyot.flagorama.model.Alpha3Code
  */
 class FavoriteRepository(private val local: FavoriteLocalDataSource?) {
     fun observeFavoriteCountries() = DatabaseOnlyStrategy.getResultAsLiveData(
-        databaseQuery = { local?.getFavoriteCountries() ?: emptyList() }
+        databaseQuery = { local?.getFavoriteCountries() ?: MutableLiveData(emptyList()) }
     )
 
     fun observeIfCountryIsFavorite(countryCode: Alpha3Code) = DatabaseOnlyStrategy.getResultAsLiveData(
-        databaseQuery = { local?.isFavorite(countryCode) ?: false }
+        databaseQuery = { local?.isFavorite(countryCode) ?: MutableLiveData(false) }
     )
 
     fun addFavorite(countryCode: Alpha3Code) {

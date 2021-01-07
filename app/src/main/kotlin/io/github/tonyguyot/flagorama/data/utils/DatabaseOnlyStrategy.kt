@@ -17,6 +17,7 @@ package io.github.tonyguyot.flagorama.data.utils
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.lifecycle.map
 import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 
@@ -29,15 +30,15 @@ import timber.log.Timber
  */
 object DatabaseOnlyStrategy {
 
-    fun <T> getResultAsLiveData(databaseQuery: suspend () -> T): LiveData<Resource<T>> =
+    fun <T> getResultAsLiveData(databaseQuery: suspend () -> LiveData<T>): LiveData<Resource<T>> =
         liveData(Dispatchers.IO) {
             // report start state LOADING + no data
             Timber.d("Loading...")
             emit(Resource.loading<T>())
 
             // retrieve the cached data and report it as SUCCESS
-            val cachedSource = databaseQuery.invoke()
+            val source = databaseQuery.invoke().map { Resource.success(it) }
             Timber.d("Success: always use data from cache")
-            emit(Resource.success(cachedSource))
+            emitSource(source)
         }
 }

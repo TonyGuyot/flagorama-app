@@ -21,11 +21,7 @@ import io.github.tonyguyot.flagorama.data.FavoriteRepository
 import io.github.tonyguyot.flagorama.data.utils.Resource
 import io.github.tonyguyot.flagorama.model.Country
 
-class FavoriteViewModel : ViewModel() {
+class FavoriteViewModel(private val repository: FavoriteRepository) : ViewModel() {
 
-    lateinit var repository: FavoriteRepository
-
-    val list: LiveData<Resource<List<Country>>> by lazy {
-        repository.observeFavoriteCountries()
-    }
+    fun getList(): LiveData<Resource<List<Country>>> = repository.observeFavoriteCountries()
 }
