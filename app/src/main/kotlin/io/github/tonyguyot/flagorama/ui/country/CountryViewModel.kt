@@ -22,7 +22,6 @@ import io.github.tonyguyot.flagorama.data.CountryRepository
 import io.github.tonyguyot.flagorama.data.FavoriteRepository
 import io.github.tonyguyot.flagorama.model.CountryDetails
 import io.github.tonyguyot.flagorama.data.utils.Resource
-import io.github.tonyguyot.flagorama.model.Alpha3Code
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -38,10 +37,24 @@ class CountryViewModel : ViewModel() {
         detailsRepository.observeCountryDetails(countryCode)
     }
 
+    val isFavorite: LiveData<Resource<Boolean>> by lazy {
+        favoriteRepository.observeIfCountryIsFavorite(countryCode)
+    }
+
+    /** Action: add country to list of favorites */
     fun addToFavorite() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 favoriteRepository.addFavorite(countryCode)
+            }
+        }
+    }
+
+    /** Action: remove country from list of favorites */
+    fun removeFromFavorite() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                favoriteRepository.removeFavorite(countryCode)
             }
         }
     }

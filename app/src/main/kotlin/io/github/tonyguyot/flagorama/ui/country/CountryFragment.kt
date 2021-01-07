@@ -91,7 +91,23 @@ class CountryFragment : Fragment() {
             confirmAddedToFavorites()
             true
         }
+        R.id.action_remove_favorite -> {
+            Timber.d("remove from favorite")
+            viewModel.removeFromFavorite()
+            confirmRemovedFromFavorites()
+            true
+        }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        val isFavorite = viewModel.isFavorite.value?.data
+        if (isFavorite != null) {
+            // if some data available, enable the corresponding menu options
+            menu.findItem(R.id.action_add_favorite).isVisible = !isFavorite
+            menu.findItem(R.id.action_remove_favorite).isVisible = isFavorite
+        }
     }
 
     /** Subscribe to all live data from view model */
@@ -113,6 +129,8 @@ class CountryFragment : Fragment() {
                 }
             }
         })
+
+        viewModel.isFavorite.observe(viewLifecycleOwner) { activity?.invalidateOptionsMenu() }
     }
 
     /** Action to perform when user clicks on the flag */
@@ -132,6 +150,12 @@ class CountryFragment : Fragment() {
     /** Provide feedback when country added to favorites */
     private fun confirmAddedToFavorites() {
         val text = resources.getString(R.string.info_added_to_favorite, args.countryName ?: "")
+        Snackbar.make(rootView, text, LENGTH_LONG).show()
+    }
+
+    /** Provide feedback when country removed from favorites */
+    private fun confirmRemovedFromFavorites() {
+        val text = resources.getString(R.string.info_removed_from_favorite, args.countryName ?: "")
         Snackbar.make(rootView, text, LENGTH_LONG).show()
     }
 

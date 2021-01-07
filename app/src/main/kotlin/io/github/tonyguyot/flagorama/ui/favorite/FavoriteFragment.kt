@@ -34,6 +34,9 @@ import io.github.tonyguyot.flagorama.ui.region.RegionAdapter
 import io.github.tonyguyot.flagorama.utils.setTitle
 import io.github.tonyguyot.flagorama.utils.showIf
 
+/**
+ * Favorite fragment: display all favorite countries
+ */
 class FavoriteFragment : Fragment() {
     private lateinit var viewModel: FavoriteViewModel
 

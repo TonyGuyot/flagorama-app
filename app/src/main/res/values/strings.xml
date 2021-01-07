@@ -36,6 +36,7 @@
     <!-- Menu for country details screen -->
     <string name="menu_add_favorite">add as favorite</string>
     <string name="info_added_to_favorite">%s has been added to the favorites</string>
+    <string name="info_removed_from_favorite">%s has been removed from the favorites</string>
 
     <!-- Favorites screen -->
     <string name="fav_title">Favorites</string>

@@ -26,10 +26,21 @@ import io.github.tonyguyot.flagorama.model.Country
  */
 class FavoriteLocalDataSource(private val dao: FavoriteDao) {
 
+    /** Retrieve all countries that are marked as favorite */
     fun getFavoriteCountries(): List<Country> =
         dao.selectAllFavorites().map { toCountry(it) }
 
+    /** Check if the country identified by [countryCode] is marked as favorite */
+    fun isFavorite(countryCode: Alpha3Code): Boolean =
+        dao.selectFavorite(countryCode) != null
+
+    /** Mark the country identified by [countryCode] as favorite */
     fun saveFavorite(countryCode: Alpha3Code) {
         dao.insert(FavoriteEntity(countryCode))
+    }
+
+    /** Remove the country identified by [countryCode] from the favorites */
+    fun deleteFavorite(countryCode: Alpha3Code) {
+        dao.delete(FavoriteEntity(countryCode))
     }
 }

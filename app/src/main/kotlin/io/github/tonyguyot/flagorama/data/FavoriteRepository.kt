@@ -27,7 +27,15 @@ class FavoriteRepository(private val local: FavoriteLocalDataSource?) {
         databaseQuery = { local?.getFavoriteCountries() ?: emptyList() }
     )
 
+    fun observeIfCountryIsFavorite(countryCode: Alpha3Code) = DatabaseOnlyStrategy.getResultAsLiveData(
+        databaseQuery = { local?.isFavorite(countryCode) ?: false }
+    )
+
     fun addFavorite(countryCode: Alpha3Code) {
         local?.saveFavorite(countryCode)
+    }
+
+    fun removeFavorite(countryCode: Alpha3Code) {
+        local?.deleteFavorite(countryCode)
     }
 }
