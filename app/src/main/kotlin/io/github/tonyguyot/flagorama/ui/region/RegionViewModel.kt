@@ -22,10 +22,10 @@ import io.github.tonyguyot.flagorama.model.Country
 import io.github.tonyguyot.flagorama.data.utils.Resource
 
 /** ViewModel for the [RegionFragment] */
-class RegionViewModel : ViewModel() {
-
-    lateinit var repository: RegionRepository
-    lateinit var regionId: String
+class RegionViewModel(
+    private val repository: RegionRepository,
+    private val regionId: String
+) : ViewModel() {
 
     val list: LiveData<Resource<List<Country>>> by lazy {
         repository.observeCountries(regionId)

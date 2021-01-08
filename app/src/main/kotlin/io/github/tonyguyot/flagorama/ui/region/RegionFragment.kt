@@ -20,6 +20,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -35,6 +36,7 @@ import io.github.tonyguyot.flagorama.data.utils.Resource
 import io.github.tonyguyot.flagorama.data.utils.provideService
 import io.github.tonyguyot.flagorama.databinding.FragmentRegionBinding
 import io.github.tonyguyot.flagorama.utils.*
+import timber.log.Timber
 
 /**
  * Region fragment: display the list of countries belonging to that region
@@ -49,9 +51,8 @@ class RegionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // retrieve associated view model
-        viewModel = ViewModelProvider(this).get(RegionViewModel::class.java)
-        viewModel.repository = createRegionRepository()
-        viewModel.regionId = args.regionId
+        val viewModelFactory = RegionViewModelFactory(createRegionRepository(), args.regionId)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(RegionViewModel::class.java)
 
         // inflate UI
         val binding = FragmentRegionBinding.inflate(inflater, container, false)
@@ -81,6 +82,9 @@ class RegionFragment : Fragment() {
 
     private fun subscribeToData(binding: FragmentRegionBinding, adapter: RegionAdapter) {
         viewModel.list.observe(viewLifecycleOwner, { result ->
+            Timber.d("New data: status=%s/content=%s", result.status,
+                if (result.data == null) "NULL" else "Not Null" )
+
             // if loading in progress, show the progress bar
             binding.regionProgressBar.showIf { result.status == Resource.Status.LOADING }
 
@@ -109,3 +113,13 @@ class RegionFragment : Fragment() {
     }
 }
 
+/** Factory for the [RegionViewModel] */
+class RegionViewModelFactory(
+    private val repository: RegionRepository,
+    private val regionId: String
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return modelClass.getConstructor(RegionRepository::class.java, String::class.java)
+            .newInstance(repository, regionId)
+    }
+}

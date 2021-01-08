@@ -34,7 +34,7 @@ class FlagFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // inflate UI
         val binding = FragmentFlagBinding.inflate(inflater, container, false)
         binding.flagUrl = args.flagUrl

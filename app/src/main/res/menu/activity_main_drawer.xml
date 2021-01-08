@@ -3,35 +3,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_action_globe"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_favorite"
-            android:icon="@drawable/ic_action_heart"
-            android:title="@string/menu_favorite" />
-        <item
-            android:id="@+id/nav_quiz"
-            android:icon="@drawable/ic_action_achievement"
-            android:title="@string/menu_quiz" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_action_gear"
-            android:title="@string/menu_settings" />
-    </group>
+    <item android:title="@string/nav_header_subtitle">
+        <menu>
+            <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/ic_action_globe"
+                android:title="@string/menu_home"
+                />
+            <item
+                android:id="@+id/nav_favorite"
+                android:icon="@drawable/ic_action_heart"
+                android:title="@string/menu_favorite"
+                />
+        </menu>
+    </item>
 
     <item android:title="@string/menu_title_information">
         <menu>
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_action_flag"
-                android:title="@string/menu_about" />
+                android:title="@string/menu_about"
+                />
             <item
                 android:id="@+id/nav_source"
                 android:icon="@drawable/ic_action_github"
-                android:title="@string/menu_source" />
+                android:title="@string/menu_source"
+                />
+            <item
+                android:id="@+id/nav_privacy"
+                android:icon="@drawable/ic_action_key"
+                android:title="@string/menu_privacy"
+                />
+            <item
+                android:id="@+id/nav_licences"
+                android:icon="@drawable/ic_action_news"
+                android:title="@string/menu_licences"
+                />
+            <item
+                android:id="@+id/nav_report"
+                android:icon="@drawable/ic_action_bell"
+                android:title="@string/menu_report"
+                />
         </menu>
     </item>
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.tonyguyot.flagorama.ui.about
+package io.github.tonyguyot.flagorama.ui.info
 
 import android.os.Bundle
 import android.view.LayoutInflater

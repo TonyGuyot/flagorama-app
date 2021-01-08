@@ -24,7 +24,6 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import io.github.tonyguyot.flagorama.databinding.ActivityMainBinding
@@ -47,8 +46,8 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home, R.id.nav_favorite, R.id.nav_quiz,
-            R.id.nav_settings, R.id.nav_about, R.id.nav_source), drawerLayout)
+            R.id.nav_home, R.id.nav_favorite, R.id.nav_about, R.id.nav_source, R.id.nav_privacy,
+            R.id.nav_licences, R.id.nav_report), drawerLayout)
 
         // Set up the action bar
         setSupportActionBar(binding.appBarMain.toolbar)

@@ -12,7 +12,7 @@ It uses also some ideas from [Eli-Fox, LEGO-Catalog](https://github.com/Eli-Fox/
 
 Usually examples of Android app architectures are mixing everything in the model entities. This is a
 bad practice: database or JSON specific annotations are then carried in the whole application.
-Worse some fields exist only because they have some implementation purpose for the database for
+Worse, some fields exist only because they have some implementation purpose for the database for
 example. Those fields shouldn't be seen by the UI.
 
 In Flagorama, the model entities are pure business objects: they do not carry any implementation or
@@ -129,10 +129,14 @@ are independent of the application.
 
 ### 2.4 Strategy
 
+#### 2.4.1 Definition
+
 The strategy (corresponding to the `NetworkBoundResource` in the official Android developer
 documentation) is very important since it enables to define a given strategy (for example: database
 first) and then all repositories need only to pass the appropriate lambdas to the selected
 strategy.
+
+#### 2.4.2 Usage example
 
 Here is the example of a Repository in Flagorama:
 
@@ -149,8 +153,11 @@ class RegionRepository(
     )
 }
 ```
+As we see, the code is made short thanks to the use of a generic strategy class.
 
-The algorithm for the database strategy is the following:
+#### 2.4.3 "Database First" strategy
+
+The algorithm for the "database first" strategy is the following:
 
     emit LOADING + no data
     retrieve data from database
@@ -165,6 +172,23 @@ The algorithm for the database strategy is the following:
             emit SUCCESS + data
         otherwise:
             emit ERROR + error code
+
+The caller will receive a triplet status/data/error with the following signification:
+
+| status  | data | error | meaning                                                        |
+|---------|------|-------|----------------------------------------------------------------|
+| LOADING | no   | no    | Always the start state: no data yet available                  |
+| LOADING | yes  | no    | Found old data in local cache, will fetch new one from network |
+| SUCCESS | yes  | no    | We're done!                                                    |
+| ERROR   | no   | yes   | Failed to retrieve any data                                    |
+| ERROR   | yes  | yes   | Failed to retrieve new data, obsolete data is available though |
+
+Based on this information, at each stage the UI can decided what to display:
+* progress bar
+* data
+* progress bar + data
+* error message
+* ...
 
 ## 3. Implementation in Flagorama
 

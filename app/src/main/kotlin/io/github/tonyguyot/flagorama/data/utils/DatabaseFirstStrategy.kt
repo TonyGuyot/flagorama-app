@@ -21,15 +21,30 @@ import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 
 /**
- * The database serves as the single source of truth.
- * Therefore UI can receive data updates from database only.
- * Function notify UI about:
- * [Resource.Status.SUCCESS] - with data from database
- * [Resource.Status.ERROR] - if error has occurred from any source
- * [Resource.Status.LOADING]
+ * The data is fetched from the database first, the network is used only if proper data could not
+ * be retrieved from the database.
  */
 object DatabaseFirstStrategy {
 
+    /**
+     * Retrieve the data as a [Resource] in a LiveData stream, so that the caller will be
+     * notified of any change during the data retrieval process.
+     *
+     * The algorithm is the following:
+     *   - first read the data from the local database using the provided [databaseQuery]
+     *   - then check if the data is not obsolete with [shouldFetch]
+     *   - if the data from the database is obsolete (i.e. `shouldFetch` returned `true`), then:
+     *      - retrieve the data from the network with [networkCall]
+     *      - save the result into the database with [saveCallResult]
+     *      - return this updated result
+     *   - otherwise if the data is not obsolete, return it with status success
+     *
+     * @return the possible returned values are:
+     *   - [Resource.Status.SUCCESS], with data from the database or the network
+     *   - [Resource.Status.ERROR], if an error has occurred from any source
+     *   - [Resource.Status.LOADING], if the process is still in progress (temporary data may be
+     *              returned also)
+     */
     fun <T> getResultAsLiveData(databaseQuery: suspend () -> T,
                                 shouldFetch: (T) -> Boolean,
                                 networkCall: suspend () -> Resource<T>,
@@ -47,18 +62,14 @@ object DatabaseFirstStrategy {
                 // the cached data is not usable, report still LOADING + cached data
                 // the UI may decide to use the temporary data or not
                 Timber.d("Need fetch from network...")
-                emit(
-                    Resource.loading<T>(
-                        cachedSource
-                    )
-                )
+                emit(Resource.loading<T>(cachedSource))
 
                 // connect to the server to retrieve data
                 val response = networkCall.invoke()
                 if (response.status == Resource.Status.SUCCESS && response.data != null) {
                     // we had a valid response from the server, save it to the database
                     // then report SUCCESS + data
-                    Timber.d("Success from network")
+                    Timber.d("Success from network, update value in cache")
                     saveCallResult(response.data)
                     emit(response)
                 } else {
@@ -66,29 +77,17 @@ object DatabaseFirstStrategy {
                     if (response.status == Resource.Status.ERROR && response.error != null) {
                         Timber.d(response.error, "Error from network:")
                         emit(
-                            Resource.error<T>(
-                                response.error,
-                                cachedSource
-                            )
+                            Resource.error<T>(response.error, cachedSource)
                         )
                     } else {
                         Timber.d("Unexpected status from network or empty data")
-                        emit(
-                            Resource.error(
-                                Exception("Unexpected error"),
-                                cachedSource
-                            )
-                        )
+                        emit(Resource.error(Exception("Unexpected error"), cachedSource))
                     }
                }
             } else {
                 // the cached data is usable, report state SUCCESS + cached data
                 Timber.d("Success: will use data from cache")
-                emit(
-                    Resource.success(
-                        cachedSource
-                    )
-                )
+                emit(Resource.success(cachedSource))
             }
         }
 }

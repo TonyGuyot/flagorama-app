@@ -20,7 +20,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import io.github.tonyguyot.flagorama.databinding.FragmentHomeBinding
 
@@ -35,7 +34,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // retrieve associated view model
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
@@ -58,7 +57,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun subscribeToData(adapter: HomeAdapter) {
-        homeViewModel.list.observe(viewLifecycleOwner, Observer { result ->
+        homeViewModel.list.observe(viewLifecycleOwner, { result ->
             result?.let { adapter.submitList(it) }
         })
     }

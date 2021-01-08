@@ -130,24 +130,9 @@
             />
     </fragment>
 
-    <!-- For future use -->
-    <fragment
-        android:id="@+id/nav_quiz"
-        android:name="io.github.tonyguyot.flagorama.ui.quiz.QuizFragment"
-        android:label="@string/menu_quiz"
-        tools:layout="@layout/fragment_quiz"
-        />
-
-    <fragment
-        android:id="@+id/nav_settings"
-        android:name="io.github.tonyguyot.flagorama.ui.tools.ToolsFragment"
-        android:label="@string/menu_settings"
-        tools:layout="@layout/fragment_settings"
-        />
-
     <fragment
         android:id="@+id/nav_about"
-        android:name="io.github.tonyguyot.flagorama.ui.about.AboutFragment"
+        android:name="io.github.tonyguyot.flagorama.ui.info.AboutFragment"
         android:label="@string/menu_about"
         tools:layout="@layout/fragment_about"
         />
@@ -158,4 +143,26 @@
         android:label="@string/menu_source"
         tools:layout="@layout/fragment_send"
         />
+
+    <fragment
+        android:id="@+id/nav_privacy"
+        android:name="io.github.tonyguyot.flagorama.ui.send.SendFragment"
+        android:label="@string/menu_privacy"
+        tools:layout="@layout/fragment_send"
+        />
+
+    <fragment
+        android:id="@+id/nav_licences"
+        android:name="io.github.tonyguyot.flagorama.ui.send.SendFragment"
+        android:label="@string/menu_licences"
+        tools:layout="@layout/fragment_send"
+        />
+
+    <fragment
+        android:id="@+id/nav_report"
+        android:name="io.github.tonyguyot.flagorama.ui.send.SendFragment"
+        android:label="@string/menu_report"
+        tools:layout="@layout/fragment_send"
+        />
+
 </navigation>
