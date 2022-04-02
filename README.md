@@ -25,10 +25,8 @@ technologies.
 - [x] Retrofit for network access
 - [x] Coil for download of images
 - [x] Timber for logging
-- [ ] Hilt for dependency injection
-- [ ] Espresso for UI tests
 
-This is still a work in progress.
+This is project is archived and no more maintained.
 
 ## Technical documentation
 
